@@ -64,4 +64,7 @@ export interface SerializedResultPayload {
   b: string[]; // badge ids
   m: string; // signature memory key or truncated text
   t: number; // timestamp
+  d?: number[]; // optional dimension score percentages
+  l?: string[]; // optional selected memory labels
 }
+

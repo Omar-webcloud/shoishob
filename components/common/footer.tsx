@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { clearAllShoishobData } from '@/lib/storage';
 import { useQuizStore } from '@/lib/store';
-import { ShieldCheck, Trash2, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Trash2 } from 'lucide-react';
 import { ConfirmDialog } from '@/components/common/confirm-dialog';
 
 export function Footer() {
@@ -22,7 +22,7 @@ export function Footer() {
     setTimeout(() => {
       setCleared(false);
       setIsErasureModalOpen(false);
-      window.location.href = '/';
+      router.push('/');
     }, 1200);
   };
 

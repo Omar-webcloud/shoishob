@@ -54,7 +54,7 @@ export function SaveImageDialog({
         {isInApp && onTriggerExternalBrowser && (
           <div className="mb-4 p-3.5 rounded-2xl bg-[#E7F8EE] border border-[#2E6F40]/20 flex flex-col gap-2">
             <div className="text-xs text-[#253D2C]">
-              <span className="font-bold text-[#2E6F40]">সবচেয়ে সহজ উপায়:</span> সরাসরি ক্রোম বা ডিফল্ট ব্রাউজারে খুললে এক ক্লিকে ডাউনলোড হবে।
+              <span className="font-bold text-[#2E6F40]">সবচেয়ে সহজ উপায়:</span> সরাসরি ক্রোম বা সিস্টেম ব্রাউজারে খুললে এক ক্লিকে ডাউনলোড হবে।
             </div>
             <button
               type="button"
@@ -62,7 +62,7 @@ export function SaveImageDialog({
               className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#2E6F40] hover:bg-[#253D2C] text-white font-bold text-sm shadow-sm transition-all cursor-pointer"
             >
               <ExternalLink className="w-4 h-4" />
-              <span>ক্রোম বা সিস্টেম ব্রাউজারে খুলুন</span>
+              <span>ক্রোম বা সিস্টেম ব্রাউজারে খুলুন ও ডাউনলোড করুন</span>
             </button>
           </div>
         )}
@@ -103,14 +103,25 @@ export function SaveImageDialog({
           )}
 
           <div className="flex gap-2">
-            <a
-              href={imageUrl}
-              download={filename}
-              className="flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white border border-[#2E6F40]/30 hover:bg-[#F0FAF3] text-[#253D2C] font-bold text-sm transition-all"
-            >
-              <Download className="w-4 h-4 text-[#2E6F40]" />
-              <span>সরাসরি সেভ চেষ্টা</span>
-            </a>
+            {isInApp && onTriggerExternalBrowser ? (
+              <button
+                type="button"
+                onClick={onTriggerExternalBrowser}
+                className="flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#2E6F40] hover:bg-[#253D2C] text-white font-bold text-sm shadow-xs transition-all cursor-pointer"
+              >
+                <ExternalLink className="w-4 h-4" />
+                <span>সিস্টেম ব্রাউজারে ডাউনলোড</span>
+              </button>
+            ) : (
+              <a
+                href={imageUrl}
+                download={filename}
+                className="flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white border border-[#2E6F40]/30 hover:bg-[#F0FAF3] text-[#253D2C] font-bold text-sm transition-all"
+              >
+                <Download className="w-4 h-4 text-[#2E6F40]" />
+                <span>সরাসরি সেভ করুন</span>
+              </a>
+            )}
             <button
               onClick={onClose}
               type="button"

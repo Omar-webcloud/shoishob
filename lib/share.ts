@@ -10,9 +10,11 @@ export function encodeResultToShareQuery(result: ChildhoodResult): string {
       a: result.archetype.id,
       e: result.era.id,
       s: result.nostalgiaScore,
-      b: result.badges.map((b) => b.id),
-      m: result.signatureMemoryBn.slice(0, 150),
+      b: (result.badges || []).map((b) => b.id),
+      m: (result.signatureMemoryBn || '').slice(0, 150),
       t: Date.now(),
+      d: (result.dimensions || []).map((d) => d.percentage),
+      l: (result.selectedMemoryLabelsBn || []).slice(0, 5),
     };
 
     const json = JSON.stringify(payload);
@@ -49,6 +51,15 @@ export function decodeShareQueryToResult(encoded: string): ChildhoodResult | nul
     const era = ERAS_DATA[validated.e] || ERAS_DATA['timeless_bangla'];
     const badges = validated.b.map((id) => ALL_BADGES[id] || ALL_BADGES['antenna_master']);
 
+    const dimPercentages = validated.d || [92, 88, 94, 85, 90];
+    const dimensions = [
+      { key: 'games' as const, nameBn: 'খেলাধুলা ও আড্ডা', nameEn: 'Street Games', percentage: dimPercentages[0] ?? 92 },
+      { key: 'snacks' as const, nameBn: 'টিফিন ও খাবার', nameEn: 'Tiffin & Snacks', percentage: dimPercentages[1] ?? 88 },
+      { key: 'tv' as const, nameBn: 'টিভি ও বিনোদন', nameEn: 'Cartoons & Screen', percentage: dimPercentages[2] ?? 94 },
+      { key: 'tech' as const, nameBn: 'প্রযুক্তি ও গ্যাজেট', nameEn: 'Early Tech', percentage: dimPercentages[3] ?? 85 },
+      { key: 'school' as const, nameBn: 'স্কুল ও পরিবার', nameEn: 'School Life', percentage: dimPercentages[4] ?? 90 },
+    ];
+
     return {
       version: 1,
       id: `BDCG-SHARED-${validated.t.toString().slice(-4)}`,
@@ -57,14 +68,8 @@ export function decodeShareQueryToResult(encoded: string): ChildhoodResult | nul
       nostalgiaScore: validated.s,
       signatureMemoryBn: validated.m || archetype.taglineBn,
       badges,
-      dimensions: [
-        { key: 'games', nameBn: 'খেলাধুলা ও আড্ডা', nameEn: 'Street Games', percentage: 92 },
-        { key: 'snacks', nameBn: 'টিফিন ও খাবার', nameEn: 'Tiffin & Snacks', percentage: 88 },
-        { key: 'tv', nameBn: 'টিভি ও বিনোদন', nameEn: 'Cartoons & Screen', percentage: 94 },
-        { key: 'tech', nameBn: 'প্রযুক্তি ও গ্যাজেট', nameEn: 'Early Tech', percentage: 85 },
-        { key: 'school', nameBn: 'স্কুল ও পরিবার', nameEn: 'School Life', percentage: 90 },
-      ],
-      selectedMemoryLabelsBn: [archetype.titleBn, era.titleBn],
+      dimensions,
+      selectedMemoryLabelsBn: validated.l || [archetype.titleBn, era.titleBn],
       generatedAt: new Date(validated.t).toISOString(),
     };
   } catch (err) {

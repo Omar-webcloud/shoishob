@@ -28,7 +28,7 @@ export function detectInAppBrowser(): {
 
   const ua = window.navigator.userAgent || window.navigator.vendor || '';
 
-  if (/FBAN|FBAV/i.test(ua)) {
+  if (/FBAN|FBAV|FB_IAB|FB4A|FBIOS/i.test(ua)) {
     return { isInApp: true, platform: 'facebook' };
   }
   if (/Instagram/i.test(ua)) {
@@ -62,34 +62,54 @@ export function triggerOpenInExternalBrowser(url?: string): boolean {
   const os = getMobileOs();
 
   if (os === 'android') {
-    // Android Chrome Intent: triggers Android OS to launch Google Chrome
-    const chromeIntent = `intent://${cleanUrl}#Intent;scheme=https;package=com.android.chrome;end`;
-    const genericIntent = `intent://${cleanUrl}#Intent;scheme=https;action=android.intent.action.VIEW;end;`;
+    // Android Intent: triggers Android OS to launch Google Chrome or default system browser
+    const chromeIntent = `intent://${cleanUrl}#Intent;scheme=https;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(targetUrl)};end`;
+    const genericIntent = `intent://${cleanUrl}#Intent;scheme=https;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;end;`;
+
     try {
-      window.location.href = chromeIntent;
-      setTimeout(() => {
-        window.location.href = genericIntent;
-      }, 800);
+      const link = document.createElement('a');
+      link.href = chromeIntent;
+      link.rel = 'noopener noreferrer';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
       return true;
     } catch {
-      window.location.href = genericIntent;
-      return true;
+      try {
+        window.location.href = chromeIntent;
+        return true;
+      } catch {
+        window.location.href = genericIntent;
+        return true;
+      }
     }
   }
 
   if (os === 'ios') {
-    // On iOS Facebook browser:
-    // Try opening via googlechrome scheme if installed, or prompt
+    // On iOS Facebook browser, try breakout schemes
     try {
-      window.location.href = `googlechrome://${cleanUrl}`;
+      window.location.href = `x-safari-https://${cleanUrl}`;
       return true;
     } catch {
-      return false;
+      try {
+        window.location.href = `googlechromes://${cleanUrl}`;
+        return true;
+      } catch {
+        return false;
+      }
     }
   }
 
-  window.open(targetUrl, '_blank');
-  return true;
+  try {
+    const win = window.open(targetUrl, '_blank');
+    if (!win) {
+      window.location.href = targetUrl;
+    }
+    return true;
+  } catch {
+    window.location.href = targetUrl;
+    return true;
+  }
 }
 
 // Ensure fonts are ready before DOM capture

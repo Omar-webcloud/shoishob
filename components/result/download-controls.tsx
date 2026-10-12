@@ -38,7 +38,7 @@ export function DownloadControls({
             <div>
               <span className="font-bold text-sm">ফেসবুক ব্রাউজার ব্যবহার করছেন?</span>
               <p className="text-xs text-amber-900/90 mt-0.5">
-                ফেসবুকের নিজস্ব বিধিনিষেধের কারণে সরাসরি ডাউনলোড বন্ধ থাকতে পারে। ক্রোম বা সিস্টেম ব্রাউজারে খুললে এক ক্লিকে ডাউনলোড হবে।
+                ফেসবুকের নিজস্ব বিধিনিষেধের কারণে ডাউনলোডে চাপলে স্বয়ংক্রিয়ভাবে সিস্টেম ব্রাউজারে রিডাইরেক্ট হয়ে ডাউনলোড সম্পন্ন হবে।
               </p>
             </div>
           </div>
@@ -49,7 +49,7 @@ export function DownloadControls({
               className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#2E6F40] hover:bg-[#253D2C] text-white font-bold text-xs shadow-sm transition-all cursor-pointer"
             >
               <ExternalLink className="w-4 h-4" />
-              <span>সিস্টেম ব্রাউজারে খুলুন</span>
+              <span>সিস্টেম ব্রাউজারে ডাউনলোড</span>
             </button>
           )}
         </div>
@@ -97,7 +97,7 @@ export function DownloadControls({
           ) : (
             <Download className="w-4 h-4" />
           )}
-          <span>PNG ডাউনলোড (হাই-কোয়ালিটি)</span>
+          <span>{isInApp ? 'PNG ডাউনলোড (সিস্টেম রিডাইরেক্ট)' : 'PNG ডাউনলোড (হাই-কোয়ালিটি)'}</span>
         </button>
 
         <button
@@ -111,7 +111,7 @@ export function DownloadControls({
           ) : (
             <Download className="w-4 h-4" />
           )}
-          <span>JPG ডাউনলোড (৯৫% অপ্টিমাইজড)</span>
+          <span>{isInApp ? 'JPG ডাউনলোড (সিস্টেম রিডাইরেক্ট)' : 'JPG ডাউনলোড (৯৫% অপ্টিমাইজড)'}</span>
         </button>
       </div>
 

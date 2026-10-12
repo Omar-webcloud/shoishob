@@ -7,6 +7,7 @@ import { useQuizStore } from '@/lib/store';
 import { QuizProgress } from './quiz-progress';
 import { QuestionCard } from './question-card';
 import { QuizNavigation } from './quiz-navigation';
+import { encodeResultToShareQuery } from '@/lib/share';
 
 import { ConfirmDialog } from '@/components/common/confirm-dialog';
 
@@ -67,8 +68,9 @@ export function QuizShell() {
       // Completed all questions! Generate result
       setIsSubmitting(true);
       try {
-        generateAndSaveResult();
-        router.push('/result');
+        const freshResult = generateAndSaveResult();
+        const encoded = freshResult ? encodeResultToShareQuery(freshResult) : '';
+        router.push(encoded ? `/result?data=${encoded}` : '/result');
       } catch (err) {
         console.error('Failed to generate result:', err);
         setIsSubmitting(false);

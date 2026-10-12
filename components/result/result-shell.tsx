@@ -1,21 +1,23 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import confetti from 'canvas-confetti';
 import { ChildhoodResult } from '@/types/result';
-import { getQuizResult, clearAllShoishobData } from '@/lib/storage';
+import { getQuizResult, saveQuizResult, clearAllShoishobData } from '@/lib/storage';
 import { useQuizStore } from '@/lib/store';
 import {
   ExportFormat,
   CardOrientation,
   detectInAppBrowser,
+  getMobileOs,
   generateCardBlob,
   triggerDirectDownload,
   triggerNativeFileShare,
   triggerOpenInExternalBrowser,
 } from '@/lib/export-image';
+import { encodeResultToShareQuery, decodeShareQueryToResult } from '@/lib/share';
 import { IdentityCard } from './identity-card';
 import { ExportableCard } from './exportable-card';
 import { DownloadControls } from './download-controls';
@@ -32,9 +34,31 @@ interface ResultShellProps {
 
 export function ResultShell({ initialResult }: ResultShellProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const storeResult = useQuizStore((s) => s.result);
   const clearAll = useQuizStore((s) => s.clearAll);
-  const result: ChildhoodResult | null = initialResult || storeResult || getQuizResult();
+
+  const queryData = searchParams.get('data');
+  const autoDownloadParam = searchParams.get('autodownload');
+  const downloadFormatParam = (searchParams.get('download') as ExportFormat) || 'png';
+
+  // Decode from URL query if present (preserves result across external browser handoff)
+  const queryResult = useMemo(() => {
+    if (!queryData) return null;
+    const decoded = decodeShareQueryToResult(queryData);
+    if (decoded) {
+      saveQuizResult(decoded);
+      return decoded;
+    }
+    return null;
+  }, [queryData]);
+
+  const result: ChildhoodResult | null =
+    initialResult ||
+    storeResult ||
+    queryResult ||
+    getQuizResult();
+
   const [orientation, setOrientation] = useState<CardOrientation>('portrait');
   const [isExporting, setIsExporting] = useState(false);
   const [canWebShare] = useState<boolean>(() => {
@@ -67,6 +91,7 @@ export function ResultShell({ initialResult }: ResultShellProps) {
 
   // Ref to the hidden fixed-dimension exportable card element
   const exportCardRef = useRef<HTMLDivElement>(null);
+  const hasAutoDownloadedRef = useRef(false);
 
   useEffect(() => {
     // Fire celebratory confetti!
@@ -91,20 +116,67 @@ export function ResultShell({ initialResult }: ResultShellProps) {
     };
   }, [saveModal.imageUrl]);
 
-  const showStatus = (type: 'success' | 'error' | 'info', text: string) => {
+  const showStatus = useCallback((type: 'success' | 'error' | 'info', text: string) => {
     setStatusMessage({ type, text });
     setTimeout(() => {
       setStatusMessage(null);
     }, 4500);
-  };
+  }, []);
 
-  const handleOpenInSystemBrowser = () => {
-    triggerOpenInExternalBrowser();
-  };
+  // Redirect to system browser (Chrome/Safari) with data & auto-download parameters
+  const handleRedirectToSystemDownload = useCallback((format: ExportFormat = 'png') => {
+    if (!result) return;
+    const encoded = encodeResultToShareQuery(result);
+    const targetUrl = `${window.location.origin}/result?data=${encoded}&download=${format}&autodownload=1`;
 
-  // Main Image Export Handler (Tier 1 -> Tier 3)
-  const handleExport = async (format: ExportFormat) => {
-    if (!result || !exportCardRef.current || isExporting) return;
+    showStatus(
+      'info',
+      'ফেসবুক ব্রাউজার থেকে সিস্টেম ব্রাউজারে রিডাইরেক্ট করে স্বয়ংক্রিয় ডাউনলোড শুরু হচ্ছে...'
+    );
+
+    triggerOpenInExternalBrowser(targetUrl);
+  }, [result, showStatus]);
+
+  const handleOpenInSystemBrowser = useCallback(() => {
+    handleRedirectToSystemDownload('png');
+  }, [handleRedirectToSystemDownload]);
+
+  // Main Image Export Handler
+  const handleExport = useCallback(async (format: ExportFormat, isAutoDownload = false) => {
+    if (!result) return;
+
+    // In in-app browsers (Facebook, Instagram, Messenger), direct anchor downloads are blocked.
+    // If user clicks download while in in-app browser, automatically redirect to system browser!
+    if (isInApp && !isAutoDownload) {
+      const os = getMobileOs();
+      // On iOS Facebook, attempt native Web Share if available (allows 1-tap "Save Image" to Photos)
+      if (os === 'ios' && inAppPlatform === 'facebook' && canWebShare && exportCardRef.current) {
+        setIsExporting(true);
+        try {
+          const blob = await generateCardBlob(exportCardRef.current, format);
+          const filename = `bangladesh-childhood-${result.archetype.id}.${format}`;
+          const shared = await triggerNativeFileShare(
+            blob,
+            filename,
+            `আমার শৈশব: ${result.archetype.titleBn}`
+          );
+          if (shared) {
+            showStatus('success', 'ছবিটি সেভ বা শেয়ার করার উইন্ডো খোলা হয়েছে!');
+            setIsExporting(false);
+            return;
+          }
+        } catch {
+          // Fall through to external browser redirect
+        } finally {
+          setIsExporting(false);
+        }
+      }
+
+      handleRedirectToSystemDownload(format);
+      return;
+    }
+
+    if (!exportCardRef.current || isExporting) return;
 
     setIsExporting(true);
     setStatusMessage(null);
@@ -115,9 +187,13 @@ export function ResultShell({ initialResult }: ResultShellProps) {
       const blob = await generateCardBlob(exportCardRef.current, format);
       const url = URL.createObjectURL(blob);
 
-      // In in-app browsers (Facebook, Instagram), direct anchor downloads are blocked
-      if (isInApp) {
-        // First try triggering System OS Native Download / Share Sheet
+      // Tier 1: Try direct anchor download (works in Chrome / Safari / Firefox)
+      const success = triggerDirectDownload(blob, filename);
+
+      if (success) {
+        showStatus('success', `${format.toUpperCase()} ফাইল সরাসরি আপনার সিস্টেমে ডাউনলোড হয়েছে!`);
+      } else {
+        // Fallback to Tier 2 (WebShare) or Tier 3 (Save modal)
         if (canWebShare) {
           try {
             const shared = await triggerNativeFileShare(
@@ -135,24 +211,7 @@ export function ResultShell({ initialResult }: ResultShellProps) {
           }
         }
 
-        // Open upgraded Save Modal with external browser trigger
-        setSaveModal({
-          isOpen: true,
-          imageUrl: url,
-          filename,
-        });
-        showStatus('info', 'ফেসবুক ব্রাউজারের জন্য সেভ ও ডাউনলোড বিকল্প দেওয়া হয়েছে।');
-        setIsExporting(false);
-        return;
-      }
-
-      // Tier 1: Try direct anchor download
-      const success = triggerDirectDownload(blob, filename);
-
-      if (success) {
-        showStatus('success', `${format.toUpperCase()} ফাইল ডাউনলোড শুরু হয়েছে!`);
-      } else {
-        // Fallback to Tier 3 Save modal
+        // Tier 3: Save modal
         setSaveModal({
           isOpen: true,
           imageUrl: url,
@@ -165,7 +224,34 @@ export function ResultShell({ initialResult }: ResultShellProps) {
     } finally {
       setIsExporting(false);
     }
-  };
+  }, [result, isInApp, inAppPlatform, canWebShare, isExporting, handleRedirectToSystemDownload, showStatus]);
+
+  // Auto-download listener when redirected into system browser with autodownload=1
+  useEffect(() => {
+    if (autoDownloadParam !== '1' || !result || hasAutoDownloadedRef.current) {
+      return;
+    }
+
+    hasAutoDownloadedRef.current = true;
+
+    // Clean up query parameters so user doesn't get repeated downloads on refresh
+    try {
+      const cleanUrl = new URL(window.location.href);
+      cleanUrl.searchParams.delete('autodownload');
+      cleanUrl.searchParams.delete('download');
+      window.history.replaceState({}, '', cleanUrl.toString());
+    } catch {
+      // ignore
+    }
+
+    // Allow DOM to settle and custom Bangla fonts to load properly before capture
+    const timer = setTimeout(async () => {
+      showStatus('info', 'সিস্টেম ব্রাউজারে স্বয়ংক্রিয় ডাউনলোড শুরু হচ্ছে...');
+      await handleExport(downloadFormatParam, true);
+    }, 700);
+
+    return () => clearTimeout(timer);
+  }, [autoDownloadParam, result, downloadFormatParam, handleExport, showStatus]);
 
   // Tier 2: Native Web Share File Handler
   const handleWebShare = async () => {
@@ -214,7 +300,7 @@ export function ResultShell({ initialResult }: ResultShellProps) {
     setTimeout(() => {
       setIsClearSuccess(false);
       setIsClearModalOpen(false);
-      window.location.href = '/';
+      router.push('/');
     }, 1200);
   };
 

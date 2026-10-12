@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Trash2, RotateCcw, AlertTriangle, CheckCircle2, X } from 'lucide-react';
+import { Trash2, RotateCcw, CheckCircle2, X } from 'lucide-react';
 
 interface ConfirmDialogProps {
   isOpen: boolean;
