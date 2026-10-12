@@ -53,6 +53,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="bn" className="scroll-smooth">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap"
+        />
+      </head>
       <body className="paper-pattern min-h-screen flex flex-col text-[#253D2C] selection:bg-[#CFFFD6] selection:text-[#253D2C]">
         {children}
       </body>

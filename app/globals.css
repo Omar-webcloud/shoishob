@@ -16,8 +16,8 @@
   --color-sepia: #9A6B3D;
   --color-terracotta: #C45A34;
 
-  /* Typography with comprehensive Bengali unicode and conjunct support */
-  --font-bangla: 'Hind Siliguri', 'Noto Sans Bengali', 'Anek Bangla', 'Kalpurush', 'SolaimanLipi', system-ui, -apple-system, sans-serif;
+  /* Typography with comprehensive Bengali unicode, numerals, and alternative system font fallbacks */
+  --font-bangla: 'Hind Siliguri', 'Noto Sans Bengali', 'Anek Bangla', 'Kohinoor Bangla', 'Bangla Sangam MN', 'Bangla MN', 'SolaimanLipi', 'Kalpurush', 'Siyam Rupali', 'Nirmala UI', system-ui, -apple-system, sans-serif;
   --font-latin: 'Outfit', -apple-system, sans-serif;
 }
 

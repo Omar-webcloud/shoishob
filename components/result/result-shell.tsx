@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import confetti from 'canvas-confetti';
 import { ChildhoodResult } from '@/types/result';
-import { getQuizResult } from '@/lib/storage';
+import { getQuizResult, clearAllShoishobData } from '@/lib/storage';
 import { useQuizStore } from '@/lib/store';
 import {
   ExportFormat,
@@ -14,6 +14,7 @@ import {
   generateCardBlob,
   triggerDirectDownload,
   triggerNativeFileShare,
+  triggerOpenInExternalBrowser,
 } from '@/lib/export-image';
 import { IdentityCard } from './identity-card';
 import { ExportableCard } from './exportable-card';
@@ -22,6 +23,7 @@ import { ShareActions } from './share-actions';
 import { ScoreBreakdown } from './score-breakdown';
 import { SaveImageDialog } from './save-image-dialog';
 import { StoryGuideDialog } from './story-guide-dialog';
+import { ConfirmDialog } from '@/components/common/confirm-dialog';
 import { RotateCcw, Sparkles, Trash2, ArrowLeft } from 'lucide-react';
 
 interface ResultShellProps {
@@ -59,6 +61,9 @@ export function ResultShell({ initialResult }: ResultShellProps) {
     filename: '',
   });
   const [storyGuideOpen, setStoryGuideOpen] = useState(false);
+  const [isRetakeModalOpen, setIsRetakeModalOpen] = useState(false);
+  const [isClearModalOpen, setIsClearModalOpen] = useState(false);
+  const [isClearSuccess, setIsClearSuccess] = useState(false);
 
   // Ref to the hidden fixed-dimension exportable card element
   const exportCardRef = useRef<HTMLDivElement>(null);
@@ -93,6 +98,10 @@ export function ResultShell({ initialResult }: ResultShellProps) {
     }, 4500);
   };
 
+  const handleOpenInSystemBrowser = () => {
+    triggerOpenInExternalBrowser();
+  };
+
   // Main Image Export Handler (Tier 1 -> Tier 3)
   const handleExport = async (format: ExportFormat) => {
     if (!result || !exportCardRef.current || isExporting) return;
@@ -106,14 +115,33 @@ export function ResultShell({ initialResult }: ResultShellProps) {
       const blob = await generateCardBlob(exportCardRef.current, format);
       const url = URL.createObjectURL(blob);
 
-      // In in-app browsers, direct anchor downloads often get blocked silently
+      // In in-app browsers (Facebook, Instagram), direct anchor downloads are blocked
       if (isInApp) {
+        // First try triggering System OS Native Download / Share Sheet
+        if (canWebShare) {
+          try {
+            const shared = await triggerNativeFileShare(
+              blob,
+              filename,
+              `আমার শৈশব: ${result.archetype.titleBn}`
+            );
+            if (shared) {
+              showStatus('success', 'সিস্টেম ডাউনলোড / শেয়ার উইন্ডো খোলা হয়েছে!');
+              setIsExporting(false);
+              return;
+            }
+          } catch {
+            // continue to save modal
+          }
+        }
+
+        // Open upgraded Save Modal with external browser trigger
         setSaveModal({
           isOpen: true,
           imageUrl: url,
           filename,
         });
-        showStatus('info', 'ইন-অ্যাপ ব্রাউজারের কারণে সেভ স্ক্রিন খুলে দেওয়া হয়েছে।');
+        showStatus('info', 'ফেসবুক ব্রাউজারের জন্য সেভ ও ডাউনলোড বিকল্প দেওয়া হয়েছে।');
         setIsExporting(false);
         return;
       }
@@ -173,17 +201,21 @@ export function ResultShell({ initialResult }: ResultShellProps) {
     }
   };
 
-  const handleRetake = () => {
-    if (window.confirm('আপনি কি আবার কুইজ দিতে চান?')) {
-      router.push('/quiz');
-    }
+  const handleConfirmRetake = () => {
+    setIsRetakeModalOpen(false);
+    clearAll();
+    router.push('/quiz');
   };
 
-  const handleClearData = () => {
-    if (window.confirm('আপনি কি সমস্ত সংরক্ষিত শৈশব ডেটা মুছে ফেলতে চান?')) {
-      clearAll();
-      router.push('/');
-    }
+  const handleConfirmClear = () => {
+    clearAll();
+    clearAllShoishobData();
+    setIsClearSuccess(true);
+    setTimeout(() => {
+      setIsClearSuccess(false);
+      setIsClearModalOpen(false);
+      window.location.href = '/';
+    }, 1200);
   };
 
   // If no result found in localStorage, invite user to take the quiz
@@ -241,6 +273,7 @@ export function ResultShell({ initialResult }: ResultShellProps) {
         <DownloadControls
           onExport={handleExport}
           onWebShare={handleWebShare}
+          onOpenInExternalBrowser={handleOpenInSystemBrowser}
           isExporting={isExporting}
           canWebShare={canWebShare}
           isInApp={isInApp}
@@ -273,8 +306,8 @@ export function ResultShell({ initialResult }: ResultShellProps) {
         <div className="flex items-center gap-3">
           <button
             type="button"
-            onClick={handleRetake}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-[#2E6F40]/20 text-[#253D2C] hover:bg-black/5 font-semibold transition-all"
+            onClick={() => setIsRetakeModalOpen(true)}
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-[#2E6F40]/20 text-[#253D2C] hover:bg-black/5 font-semibold transition-all cursor-pointer"
           >
             <RotateCcw className="w-4 h-4 text-[#2E6F40]" />
             <span>আবার কুইজ দিন</span>
@@ -282,11 +315,11 @@ export function ResultShell({ initialResult }: ResultShellProps) {
 
           <button
             type="button"
-            onClick={handleClearData}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-red-700 hover:bg-red-50 border border-red-200 transition-colors"
+            onClick={() => setIsClearModalOpen(true)}
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-red-700 hover:bg-red-50 border border-red-200 transition-colors cursor-pointer"
           >
             <Trash2 className="w-4 h-4" />
-            <span>ডেটা মুছুন</span>
+            <span>আমার ডেটা মুছুন</span>
           </button>
         </div>
       </div>
@@ -316,6 +349,9 @@ export function ResultShell({ initialResult }: ResultShellProps) {
         isOpen={saveModal.isOpen}
         imageUrl={saveModal.imageUrl}
         filename={saveModal.filename}
+        isInApp={isInApp}
+        onTriggerExternalBrowser={handleOpenInSystemBrowser}
+        onTriggerSystemShare={handleWebShare}
         onClose={() =>
           setSaveModal({ isOpen: false, imageUrl: null, filename: '' })
         }
@@ -325,6 +361,32 @@ export function ResultShell({ initialResult }: ResultShellProps) {
         isOpen={storyGuideOpen}
         onClose={() => setStoryGuideOpen(false)}
         onDownloadFirst={() => handleExport('png')}
+      />
+
+      {/* Retake Quiz Modal */}
+      <ConfirmDialog
+        isOpen={isRetakeModalOpen}
+        onClose={() => setIsRetakeModalOpen(false)}
+        onConfirm={handleConfirmRetake}
+        title="আবার কুইজ দিতে চান?"
+        description="আপনি কি নতুন করে কুইজ শুরু করতে চান? বর্তমান উত্তরগুলো মুছে নতুন করে উত্তর বাছাই করতে পারবেন।"
+        confirmText="হ্যাঁ, আবার কুইজ দিন"
+        cancelText="বাতিল"
+        variant="primary"
+      />
+
+      {/* Clear Data Modal */}
+      <ConfirmDialog
+        isOpen={isClearModalOpen}
+        onClose={() => setIsClearModalOpen(false)}
+        onConfirm={handleConfirmClear}
+        title="সমস্ত সংরক্ষিত ডেটা মুছে ফেলতে চান?"
+        description="আপনার সংরক্ষিত সমস্ত শৈশব স্মৃতি ও পরিচয়পত্রের ফলাফল ব্রাউজারের মেমোরি থেকে স্থায়ীভাবে মুছে যাবে। এই কাজ আর ফিরিয়ে আনা যাবে না।"
+        confirmText="হ্যাঁ, সব ডেটা মুছুন"
+        cancelText="বাতিল"
+        variant="danger"
+        isSuccess={isClearSuccess}
+        successMessage="সব ডেটা সফলভাবে মুছে ফেলা হয়েছে!"
       />
     </div>
   );

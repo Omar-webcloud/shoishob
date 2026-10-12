@@ -81,8 +81,10 @@ export function Hero() {
           </div>
           <span className="hidden sm:inline text-[#2E6F40]/30">•</span>
           <div className="flex items-center gap-1.5">
-            <Heart className="w-4 h-4 text-[#2E6F40]" />
-            <span>১০০% খাঁটি বাংলাদেশি স্মৃতি</span>
+            <Heart className="w-4 h-4 text-[#2E6F40] shrink-0" />
+            <span className="text-[#253D2C] font-semibold">
+              <strong className="text-[#2E6F40] font-bold">১০০%</strong> খাঁটি বাংলাদেশি স্মৃতি
+            </span>
           </div>
         </div>
       </div>

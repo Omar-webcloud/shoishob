@@ -8,6 +8,8 @@ import { QuizProgress } from './quiz-progress';
 import { QuestionCard } from './question-card';
 import { QuizNavigation } from './quiz-navigation';
 
+import { ConfirmDialog } from '@/components/common/confirm-dialog';
+
 const categoryLabelsBn: Record<string, string> = {
   school_life: 'স্কুলজীবন ও স্মৃতি',
   snacks: 'টিফিন ও খাবার',
@@ -32,6 +34,7 @@ export function QuizShell() {
   } = useQuizStore();
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [isRestartModalOpen, setIsRestartModalOpen] = useState<boolean>(false);
 
   const totalQuestions = QUIZ_QUESTIONS.length;
   const currentQuestion = QUIZ_QUESTIONS[currentStep];
@@ -73,12 +76,11 @@ export function QuizShell() {
     }
   };
 
-  // Restart quiz
-  const handleRestart = () => {
-    if (window.confirm('আপনি কি কুইজটি নতুন করে শুরু করতে চান? আগের উত্তরগুলো মুছে যাবে।')) {
-      resetQuiz();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+  // Restart quiz modal confirmation
+  const handleConfirmRestart = () => {
+    resetQuiz();
+    setIsRestartModalOpen(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   if (!currentQuestion) {
@@ -102,7 +104,7 @@ export function QuizShell() {
         currentIndex={currentStep}
         totalQuestions={totalQuestions}
         categoryLabelBn={categoryLabel}
-        onRestart={handleRestart}
+        onRestart={() => setIsRestartModalOpen(true)}
       />
 
       {/* Main Question Card container */}
@@ -124,6 +126,18 @@ export function QuizShell() {
           isSubmitting={isSubmitting}
         />
       </div>
+
+      {/* Restart Quiz Confirmation Modal */}
+      <ConfirmDialog
+        isOpen={isRestartModalOpen}
+        onClose={() => setIsRestartModalOpen(false)}
+        onConfirm={handleConfirmRestart}
+        title="কুইজ রিস্টার্ট করতে চান?"
+        description="কুইজটি প্রথম থেকে শুরু হবে এবং বর্তমান উত্তরগুলো মুছে যাবে। আপনি নতুন করে পছন্দের উত্তরগুলো বাছাই করতে পারবেন।"
+        confirmText="হ্যাঁ, রিস্টার্ট করুন"
+        cancelText="বাতিল"
+        variant="primary"
+      />
     </div>
   );
 }

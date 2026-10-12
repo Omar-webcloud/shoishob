@@ -44,6 +44,54 @@ export function detectInAppBrowser(): {
   return { isInApp: false, platform: null };
 }
 
+// Detect operating system
+export function getMobileOs(): 'android' | 'ios' | 'desktop' {
+  if (typeof window === 'undefined') return 'desktop';
+  const ua = window.navigator.userAgent || '';
+  if (/Android/i.test(ua)) return 'android';
+  if (/iPhone|iPad|iPod/i.test(ua)) return 'ios';
+  return 'desktop';
+}
+
+// Trigger opening the current page in the default system browser (Chrome / Safari)
+// This bypasses the Facebook / Instagram in-app WebView download block!
+export function triggerOpenInExternalBrowser(url?: string): boolean {
+  if (typeof window === 'undefined') return false;
+  const targetUrl = url || window.location.href;
+  const cleanUrl = targetUrl.replace(/^https?:\/\//i, '');
+  const os = getMobileOs();
+
+  if (os === 'android') {
+    // Android Chrome Intent: triggers Android OS to launch Google Chrome
+    const chromeIntent = `intent://${cleanUrl}#Intent;scheme=https;package=com.android.chrome;end`;
+    const genericIntent = `intent://${cleanUrl}#Intent;scheme=https;action=android.intent.action.VIEW;end;`;
+    try {
+      window.location.href = chromeIntent;
+      setTimeout(() => {
+        window.location.href = genericIntent;
+      }, 800);
+      return true;
+    } catch {
+      window.location.href = genericIntent;
+      return true;
+    }
+  }
+
+  if (os === 'ios') {
+    // On iOS Facebook browser:
+    // Try opening via googlechrome scheme if installed, or prompt
+    try {
+      window.location.href = `googlechrome://${cleanUrl}`;
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  window.open(targetUrl, '_blank');
+  return true;
+}
+
 // Ensure fonts are ready before DOM capture
 export async function ensureFontsLoaded(): Promise<void> {
   if (typeof document !== 'undefined' && 'fonts' in document) {

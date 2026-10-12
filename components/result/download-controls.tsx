@@ -1,12 +1,13 @@
 'use client';
 
 import React from 'react';
-import { Download, Share2, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Download, Share2, AlertCircle, CheckCircle2, ExternalLink } from 'lucide-react';
 import { ExportFormat, CardOrientation } from '@/lib/export-image';
 
 interface DownloadControlsProps {
   onExport: (format: ExportFormat) => void;
   onWebShare: () => void;
+  onOpenInExternalBrowser?: () => void;
   isExporting: boolean;
   canWebShare: boolean;
   isInApp: boolean;
@@ -19,6 +20,7 @@ interface DownloadControlsProps {
 export function DownloadControls({
   onExport,
   onWebShare,
+  onOpenInExternalBrowser,
   isExporting,
   canWebShare,
   isInApp,
@@ -28,14 +30,28 @@ export function DownloadControls({
 }: DownloadControlsProps) {
   return (
     <div className="w-full space-y-4">
-      {/* Friendly in-app browser notice without developer jargons */}
+      {/* Friendly in-app browser notice with direct trigger */}
       {isInApp && (
-        <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs sm:text-sm flex items-start gap-2.5">
-          <AlertCircle className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
-          <div>
-            <span className="font-bold">বিশেষ পরামর্শ:</span>{' '}
-            ফেসবুক বা ইনস্টাগ্রাম ব্রাউজারে সরাসরি ডাউনলোড আটকে গেলে নিচের <strong>&ldquo;ছবি সংরক্ষণ করুন&rdquo;</strong> অপশন থেকে ছবিতে চেপে ধরে সহজে সেভ করে নিন।
+        <div className="p-4 rounded-2xl bg-amber-50 border-2 border-amber-300 text-amber-950 text-xs sm:text-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+          <div className="flex items-start gap-2.5">
+            <AlertCircle className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+            <div>
+              <span className="font-bold text-sm">ফেসবুক ব্রাউজার ব্যবহার করছেন?</span>
+              <p className="text-xs text-amber-900/90 mt-0.5">
+                ফেসবুকের নিজস্ব বিধিনিষেধের কারণে সরাসরি ডাউনলোড বন্ধ থাকতে পারে। ক্রোম বা সিস্টেম ব্রাউজারে খুললে এক ক্লিকে ডাউনলোড হবে।
+              </p>
+            </div>
           </div>
+          {onOpenInExternalBrowser && (
+            <button
+              type="button"
+              onClick={onOpenInExternalBrowser}
+              className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#2E6F40] hover:bg-[#253D2C] text-white font-bold text-xs shadow-sm transition-all cursor-pointer"
+            >
+              <ExternalLink className="w-4 h-4" />
+              <span>সিস্টেম ব্রাউজারে খুলুন</span>
+            </button>
+          )}
         </div>
       )}
 

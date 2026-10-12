@@ -40,11 +40,11 @@ export function QuizProgress({
           <button
             onClick={onRestart}
             type="button"
-            className="flex items-center gap-1 text-xs text-[#253D2C]/65 hover:text-red-700 p-1 rounded transition-colors"
-            title="নতুন করে শুরু করুন"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/5 hover:bg-red-50 text-xs font-semibold text-[#253D2C]/85 hover:text-red-700 border border-black/10 hover:border-red-200 transition-all cursor-pointer shadow-2xs"
+            title="নতুন করে কুইজ শুরু করুন"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">রিস্টার্ট</span>
+            <RotateCcw className="w-3.5 h-3.5 text-[#2E6F40]" />
+            <span>রিস্টার্ট</span>
           </button>
         </div>
       </div>

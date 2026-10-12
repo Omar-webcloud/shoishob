@@ -5,21 +5,25 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { clearAllShoishobData } from '@/lib/storage';
+import { useQuizStore } from '@/lib/store';
 import { ShieldCheck, Trash2, CheckCircle2 } from 'lucide-react';
+import { ConfirmDialog } from '@/components/common/confirm-dialog';
 
 export function Footer() {
   const router = useRouter();
+  const clearAll = useQuizStore((s) => s.clearAll);
   const [cleared, setCleared] = useState(false);
+  const [isErasureModalOpen, setIsErasureModalOpen] = useState(false);
 
-  const handleClearData = () => {
-    if (window.confirm('আপনি কি শৈশবের সব সংরক্ষিত উত্তর ও ফলাফল মুছে ফেলতে চান?')) {
-      clearAllShoishobData();
-      setCleared(true);
-      setTimeout(() => {
-        setCleared(false);
-        router.push('/');
-      }, 1200);
-    }
+  const handleConfirmErasure = () => {
+    clearAll();
+    clearAllShoishobData();
+    setCleared(true);
+    setTimeout(() => {
+      setCleared(false);
+      setIsErasureModalOpen(false);
+      window.location.href = '/';
+    }, 1200);
   };
 
   return (
@@ -55,21 +59,12 @@ export function Footer() {
           </div>
 
           <button
-            onClick={handleClearData}
+            onClick={() => setIsErasureModalOpen(true)}
             type="button"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-red-700 hover:bg-red-50 border border-red-200 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-red-700 hover:bg-red-50 border border-red-200 transition-colors cursor-pointer shadow-2xs"
           >
-            {cleared ? (
-              <>
-                <CheckCircle2 className="w-4 h-4 text-green-600" />
-                <span>ডেটা মুছে ফেলা হয়েছে!</span>
-              </>
-            ) : (
-              <>
-                <Trash2 className="w-4 h-4" />
-                <span>আমার ডেটা মুছুন</span>
-              </>
-            )}
+            <Trash2 className="w-4 h-4" />
+            <span>আমার ডেটা মুছুন</span>
           </button>
         </div>
       </div>
@@ -84,6 +79,20 @@ export function Footer() {
           <span>Version 1.0 (MVP)</span>
         </p>
       </div>
+
+      {/* Data Erasure Confirmation Modal */}
+      <ConfirmDialog
+        isOpen={isErasureModalOpen}
+        onClose={() => setIsErasureModalOpen(false)}
+        onConfirm={handleConfirmErasure}
+        title="সমস্ত সংরক্ষিত ডেটা মুছে ফেলতে চান?"
+        description="আপনার সংরক্ষিত সমস্ত শৈশব স্মৃতি ও পরিচয়পত্রের ফলাফল ব্রাউজারের মেমোরি থেকে স্থায়ীভাবে মুছে যাবে। এই কাজ আর ফিরিয়ে আনা যাবে না।"
+        confirmText="হ্যাঁ, সব ডেটা মুছুন"
+        cancelText="বাতিল"
+        variant="danger"
+        isSuccess={cleared}
+        successMessage="সব ডেটা সফলভাবে মুছে ফেলা হয়েছে!"
+      />
     </footer>
   );
 }

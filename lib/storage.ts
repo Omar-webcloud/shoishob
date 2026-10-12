@@ -8,6 +8,7 @@ export const STORAGE_KEYS = {
   PREFERENCES: 'bdcg_preferences_v1',
   SCHEMA_VERSION: 'bdcg_schema_version',
   CURRENT_STEP: 'bdcg_step_v1',
+  STORE: 'bdcg_store_v1',
 } as const;
 
 export const CURRENT_SCHEMA_VERSION = '1.0';
