@@ -128,18 +128,44 @@ export async function ensureFontsLoaded(): Promise<void> {
   }
 }
 
-// Generate Blob from card element with pixelRatio 2 and fallback to 1
+let cachedFontCSS: string | null = null;
+
+// Safely fetch and cache the Google Fonts CSS string.
+// Passing this directly as fontEmbedCSS prevents html-to-image from accessing document.styleSheets,
+// which completely avoids CORS SecurityError on cross-origin stylesheets or extensions.
+export async function getSafeFontEmbedCSS(): Promise<string> {
+  if (cachedFontCSS !== null) return cachedFontCSS;
+  if (typeof window === 'undefined') return '';
+
+  try {
+    const res = await fetch(
+      'https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap'
+    );
+    if (res.ok) {
+      cachedFontCSS = await res.text();
+      return cachedFontCSS;
+    }
+  } catch (err) {
+    console.warn('[Shoishob Export] Font CSS prefetch skipped, using fallback:', err);
+  }
+
+  cachedFontCSS = '';
+  return cachedFontCSS;
+}
+
+// Generate Blob from card element with pixelRatio 2 and safe font fallbacks
 export async function generateCardBlob(
   element: HTMLElement,
   format: ExportFormat
 ): Promise<Blob> {
   await ensureFontsLoaded();
+  const fontEmbedCSS = await getSafeFontEmbedCSS();
 
   const isJpg = format === 'jpg';
   const mimeType = isJpg ? 'image/jpeg' : 'image/png';
   const quality = isJpg ? 0.95 : 1.0;
 
-  // Try high-resolution rendering first (pixelRatio: 2)
+  // 1. Try high-resolution rendering with fontEmbedCSS (pixelRatio: 2)
   try {
     const blob = await toBlob(element, {
       type: mimeType,
@@ -147,6 +173,8 @@ export async function generateCardBlob(
       pixelRatio: 2,
       cacheBust: true,
       skipAutoScale: false,
+      fontEmbedCSS: fontEmbedCSS || undefined,
+      skipFonts: !fontEmbedCSS,
     });
 
     if (blob && blob.size > 1000) {
@@ -156,18 +184,38 @@ export async function generateCardBlob(
   } catch (highResError) {
     console.warn('[Shoishob Export] High-res render failed, attempting fallback (pixelRatio: 1):', highResError);
 
-    // Memory-safe retry at pixelRatio: 1
-    const fallbackBlob = await toBlob(element, {
-      type: mimeType,
-      quality,
-      pixelRatio: 1,
-      cacheBust: true,
-    });
+    // 2. Retry at pixelRatio: 1 with fontEmbedCSS
+    try {
+      const fallbackBlob = await toBlob(element, {
+        type: mimeType,
+        quality,
+        pixelRatio: 1,
+        cacheBust: true,
+        fontEmbedCSS: fontEmbedCSS || undefined,
+        skipFonts: !fontEmbedCSS,
+      });
 
-    if (!fallbackBlob || fallbackBlob.size < 1000) {
-      throw new Error('Image export failed to generate a valid image.');
+      if (fallbackBlob && fallbackBlob.size > 1000) {
+        return fallbackBlob;
+      }
+      throw new Error('Fallback rendered Blob is empty or invalid');
+    } catch (fallbackError) {
+      console.warn('[Shoishob Export] Fallback render failed, trying ultimate safe render (skipFonts: true):', fallbackError);
+
+      // 3. Ultimate safe retry: skipFonts: true (completely bypasses all stylesheet inspection)
+      const safeBlob = await toBlob(element, {
+        type: mimeType,
+        quality,
+        pixelRatio: 1,
+        cacheBust: true,
+        skipFonts: true,
+      });
+
+      if (!safeBlob || safeBlob.size < 1000) {
+        throw new Error('Image export failed to generate a valid image.');
+      }
+      return safeBlob;
     }
-    return fallbackBlob;
   }
 }
 

@@ -4,6 +4,7 @@ import { QuizAnswers } from '@/types/quiz';
 import { ChildhoodResult } from '@/types/result';
 import { QUIZ_QUESTIONS, ARCHETYPES_DATA, ERAS_DATA } from './quiz-data';
 import { generateChildhoodResult } from './result-generator';
+import { calculateChildhoodProfile } from './scoring';
 import { saveQuizResult, getQuizResult, clearAllShoishobData } from './storage';
 
 interface QuizState {
@@ -131,12 +132,19 @@ export const useQuizStore = create<QuizState>()(
                 .replace(/খুলে দেখো/g, 'খুলে দেখুন');
             };
 
+            const calculatedReflections =
+              state.result.reflections ||
+              (state.answers && Object.keys(state.answers).length > 0
+                ? calculateChildhoodProfile(state.answers).reflections
+                : undefined);
+
             state.result = {
               ...state.result,
               archetype: arch || state.result.archetype,
               era: era || state.result.era,
               signatureMemoryBn: sanitizeText(state.result.signatureMemoryBn || (arch ? arch.taglineBn : '')),
               selectedMemoryLabelsBn: (state.result.selectedMemoryLabelsBn || []).map(sanitizeText),
+              reflections: calculatedReflections || state.result.reflections,
             };
           }
         }

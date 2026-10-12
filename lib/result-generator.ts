@@ -35,5 +35,7 @@ export function generateChildhoodResult(answers: QuizAnswers): ChildhoodResult {
     dimensions: calculated.dimensions,
     selectedMemoryLabelsBn: calculated.selectedMemoryLabelsBn,
     generatedAt: new Date().toISOString(),
+    reflections: calculated.reflections,
+    answers,
   };
 }

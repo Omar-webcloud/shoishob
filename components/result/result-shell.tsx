@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import confetti from 'canvas-confetti';
-import { ChildhoodResult } from '@/types/result';
+import { ChildhoodResult, ResultCardType } from '@/types/result';
 import { getQuizResult, saveQuizResult, clearAllShoishobData } from '@/lib/storage';
 import { useQuizStore } from '@/lib/store';
 import {
@@ -27,6 +27,13 @@ import { SaveImageDialog } from './save-image-dialog';
 import { StoryGuideDialog } from './story-guide-dialog';
 import { ConfirmDialog } from '@/components/common/confirm-dialog';
 import { RotateCcw, Sparkles, Trash2, ArrowLeft } from 'lucide-react';
+
+const CARD_TABS: Array<{ id: ResultCardType; labelBn: string; icon: string }> = [
+  { id: 'identity', labelBn: 'পরিচয়পত্র', icon: '📇' },
+  { id: 'memories_log', labelBn: 'স্মৃতিকথার ডায়েরি', icon: '📖' },
+  { id: 'certificate', labelBn: 'শৈশব সনদ', icon: '📜' },
+  { id: 'badges_showcase', labelBn: 'অর্জিত ব্যাজ', icon: '🏆' },
+];
 
 interface ResultShellProps {
   initialResult?: ChildhoodResult | null;
@@ -59,6 +66,7 @@ export function ResultShell({ initialResult }: ResultShellProps) {
     queryResult ||
     getQuizResult();
 
+  const [activeCardType, setActiveCardType] = useState<ResultCardType>('identity');
   const [orientation, setOrientation] = useState<CardOrientation>('portrait');
   const [isExporting, setIsExporting] = useState(false);
   const [canWebShare] = useState<boolean>(() => {
@@ -145,6 +153,15 @@ export function ResultShell({ initialResult }: ResultShellProps) {
   const handleExport = useCallback(async (format: ExportFormat, isAutoDownload = false) => {
     if (!result) return;
 
+    const cardSlugMap: Record<ResultCardType, string> = {
+      identity: 'identity',
+      memories_log: 'memories-log',
+      certificate: 'certificate',
+      badges_showcase: 'badges',
+    };
+    const cardSlug = cardSlugMap[activeCardType] || 'card';
+    const filename = `bangladesh-childhood-${cardSlug}-${result.archetype.id}.${format}`;
+
     // In in-app browsers (Facebook, Instagram, Messenger), direct anchor downloads are blocked.
     // If user clicks download while in in-app browser, automatically redirect to system browser!
     if (isInApp && !isAutoDownload) {
@@ -154,7 +171,6 @@ export function ResultShell({ initialResult }: ResultShellProps) {
         setIsExporting(true);
         try {
           const blob = await generateCardBlob(exportCardRef.current, format);
-          const filename = `bangladesh-childhood-${result.archetype.id}.${format}`;
           const shared = await triggerNativeFileShare(
             blob,
             filename,
@@ -180,8 +196,6 @@ export function ResultShell({ initialResult }: ResultShellProps) {
 
     setIsExporting(true);
     setStatusMessage(null);
-
-    const filename = `bangladesh-childhood-${result.archetype.id}.${format}`;
 
     try {
       const blob = await generateCardBlob(exportCardRef.current, format);
@@ -224,7 +238,7 @@ export function ResultShell({ initialResult }: ResultShellProps) {
     } finally {
       setIsExporting(false);
     }
-  }, [result, isInApp, inAppPlatform, canWebShare, isExporting, handleRedirectToSystemDownload, showStatus]);
+  }, [result, activeCardType, isInApp, inAppPlatform, canWebShare, isExporting, handleRedirectToSystemDownload, showStatus]);
 
   // Auto-download listener when redirected into system browser with autodownload=1
   useEffect(() => {
@@ -258,7 +272,14 @@ export function ResultShell({ initialResult }: ResultShellProps) {
     if (!result || !exportCardRef.current || isExporting) return;
 
     setIsExporting(true);
-    const filename = `bangladesh-childhood-${result.archetype.id}.png`;
+    const cardSlugMap: Record<ResultCardType, string> = {
+      identity: 'identity',
+      memories_log: 'memories-log',
+      certificate: 'certificate',
+      badges_showcase: 'badges',
+    };
+    const cardSlug = cardSlugMap[activeCardType] || 'card';
+    const filename = `bangladesh-childhood-${cardSlug}-${result.archetype.id}.png`;
 
     try {
       const blob = await generateCardBlob(exportCardRef.current, 'png');
@@ -343,17 +364,43 @@ export function ResultShell({ initialResult }: ResultShellProps) {
         </p>
       </div>
 
-      {/* Main Identity Card Preview */}
-      <div className="w-full">
-        <IdentityCard result={result} orientation={orientation} />
+      {/* Card Switcher Tabs */}
+      <div className="flex items-center justify-center gap-1.5 sm:gap-2.5 flex-wrap">
+        {CARD_TABS.map((tab) => (
+          <button
+            key={tab.id}
+            type="button"
+            onClick={() => setActiveCardType(tab.id)}
+            className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+              activeCardType === tab.id
+                ? 'bg-[#2E6F40] text-white shadow-sm'
+                : 'bg-white border border-[#2E6F40]/20 text-[#253D2C]/80 hover:bg-[#F0FAF3]'
+            }`}
+          >
+            <span>{tab.icon}</span>
+            <span>{tab.labelBn}</span>
+          </button>
+        ))}
       </div>
 
-      {/* Download and Export Controls */}
-      <div className="tactile-card p-6 sm:p-7 bg-white">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-bold text-[#253D2C]">
-            পরিচয়পত্র সংরক্ষণ ও ডাউনলোড
+      {/* Main Identity Card Preview */}
+      <div className="w-full">
+        <IdentityCard
+          result={result}
+          cardType={activeCardType}
+          orientation={orientation}
+        />
+      </div>
+
+      {/* Clean Download and Export Controls */}
+      <div className="tactile-card p-5 sm:p-6 bg-white space-y-3">
+        <div className="flex items-center justify-between">
+          <h3 className="text-base sm:text-lg font-bold text-[#253D2C]">
+            কার্ড ডাউনলোড করুন
           </h3>
+          <span className="text-xs font-semibold text-[#2E6F40] bg-[#CFFFD6]/60 px-2.5 py-0.5 rounded-full">
+            {CARD_TABS.find((t) => t.id === activeCardType)?.labelBn}
+          </span>
         </div>
 
         <DownloadControls
@@ -426,6 +473,7 @@ export function ResultShell({ initialResult }: ResultShellProps) {
         <ExportableCard
           ref={exportCardRef}
           result={result}
+          cardType={activeCardType}
           orientation={orientation}
         />
       </div>

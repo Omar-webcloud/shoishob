@@ -23,6 +23,10 @@ export interface QuizOption {
     early_tech?: number;
     neighborhood_adventurer?: number;
     nostalgic_allrounder?: number;
+    monsoon_dreamer?: number;
+    rooftop_flyer?: number;
+    school_bookworm?: number;
+    salami_banker?: number;
   };
   eraAffinity?: ChildhoodEra;
   dimensionScores?: {

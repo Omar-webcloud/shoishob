@@ -60,6 +60,51 @@ export function decodeShareQueryToResult(encoded: string): ChildhoodResult | nul
       { key: 'school' as const, nameBn: 'স্কুল ও পরিবার', nameEn: 'School Life', percentage: dimPercentages[4] ?? 90 },
     ];
 
+    const defaultReflections = [
+      {
+        questionId: 'q4_afternoon_games',
+        category: 'games',
+        topicTitleBn: 'বিকেলের প্রিয় খেলা',
+        labelBn: archetype.id === 'cartoon_era' ? 'ঘরের টেট্রিস ও লুডু খেলা' : 'গলির ক্রিকেট ও বিকেলের মাঠ',
+        icon: '🏏',
+      },
+      {
+        questionId: 'q2_school_tiffin',
+        category: 'snacks',
+        topicTitleBn: 'টিফিনের সেরা স্বাদ',
+        labelBn: 'স্কুলগেটের ঝালমুড়ি ও টক আচার',
+        icon: '🌶️',
+      },
+      {
+        questionId: 'q3_tv_cartoons',
+        category: 'television',
+        topicTitleBn: 'টিভি ও প্রিয় বিনোদন',
+        labelBn: 'শুক্রবার সকালের আলিফ লায়লা ও বিটিভি',
+        icon: '📺',
+      },
+      {
+        questionId: 'q5_first_tech',
+        category: 'technology',
+        topicTitleBn: 'নস্টালজিক প্রযুক্তি স্মৃতি',
+        labelBn: 'নটরাজ পেনসিলে ক্যাসেটের ফিতা রিওয়াইন্ড',
+        icon: '✏️',
+      },
+      {
+        questionId: 'q7_load_shedding',
+        category: 'cultural',
+        topicTitleBn: 'লোডশেডিংয়ের স্মরণীয় কাণ্ড',
+        labelBn: 'ছাদে দলবেঁধে আড্ডা ও গা ছমছমে ভূতের গল্প',
+        icon: '🕯️',
+      },
+      {
+        questionId: 'q10_rainy_day_football',
+        category: 'games',
+        topicTitleBn: 'ঝুম বৃষ্টির স্মৃতি',
+        labelBn: 'কাদামাঠে বন্ধুদের সাথে খালি পায়ে ফুটবল',
+        icon: '⚽',
+      },
+    ];
+
     return {
       version: 1,
       id: `BDCG-SHARED-${validated.t.toString().slice(-4)}`,
@@ -71,6 +116,7 @@ export function decodeShareQueryToResult(encoded: string): ChildhoodResult | nul
       dimensions,
       selectedMemoryLabelsBn: validated.l || [archetype.titleBn, era.titleBn],
       generatedAt: new Date(validated.t).toISOString(),
+      reflections: defaultReflections,
     };
   } catch (err) {
     console.warn('[Shoishob Share] Decoding error:', err);

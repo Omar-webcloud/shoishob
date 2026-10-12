@@ -4,7 +4,22 @@ export type ArchetypeId =
   | 'tiffin_time'
   | 'early_tech'
   | 'neighborhood_adventurer'
-  | 'nostalgic_allrounder';
+  | 'nostalgic_allrounder'
+  | 'monsoon_dreamer'
+  | 'rooftop_flyer'
+  | 'school_bookworm'
+  | 'salami_banker';
+
+export type ResultCardType = 'identity' | 'memories_log' | 'certificate' | 'badges_showcase';
+
+export interface AnswerReflection {
+  questionId: string;
+  category: string;
+  topicTitleBn: string;
+  labelBn: string;
+  subtitleBn?: string;
+  icon: string;
+}
 
 export interface ArchetypeMeta {
   id: ArchetypeId;
@@ -54,6 +69,8 @@ export interface ChildhoodResult {
   selectedMemoryLabelsBn: string[];
   generatedAt: string;
   id: string;
+  reflections?: AnswerReflection[];
+  answers?: Record<string, string>;
 }
 
 export interface SerializedResultPayload {
@@ -67,4 +84,5 @@ export interface SerializedResultPayload {
   d?: number[]; // optional dimension score percentages
   l?: string[]; // optional selected memory labels
 }
+
 
