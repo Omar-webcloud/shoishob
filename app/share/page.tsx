@@ -63,7 +63,7 @@ function ShareContent() {
 
       {/* Identity Card Display */}
       <div className="w-full">
-        <IdentityCard result={result} orientation="portrait" />
+        <IdentityCard result={result} />
       </div>
 
       {/* Challenge Call to Action Banner */}

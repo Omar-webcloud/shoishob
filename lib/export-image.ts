@@ -1,11 +1,8 @@
 import { toCanvas } from 'html-to-image';
 
 export type ExportFormat = 'png' | 'jpg';
-export type CardOrientation = 'portrait' | 'landscape';
-
 export interface ExportOptions {
   format: ExportFormat;
-  orientation: CardOrientation;
   archetypeSlug: string;
 }
 
@@ -146,8 +143,7 @@ async function renderToCanvas(node: HTMLElement, pixelRatio: number): Promise<HT
 // Generate Blob directly from the live DOM node with exact styling
 export async function generateCardBlob(
   element: HTMLElement,
-  format: ExportFormat,
-  _orientation: CardOrientation = 'portrait'
+  format: ExportFormat
 ): Promise<Blob> {
   await ensureFontsLoaded();
 

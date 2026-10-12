@@ -1,128 +1,60 @@
 import React from 'react';
 import { ChildhoodResult } from '@/types/result';
-import { Sparkles, Trophy } from 'lucide-react';
+import { Trophy } from 'lucide-react';
 
 export interface CardBadgesProps {
   result: ChildhoodResult;
-  orientation?: 'portrait' | 'landscape';
 }
 
-export function CardBadges({
-  result,
-  orientation = 'portrait',
-}: CardBadgesProps) {
-  const isLandscape = orientation === 'landscape';
+const tileColors = ['#F6C453', '#9FE3C0', '#A9D5F3', '#F3B7A9', '#D3B7EE', '#C8E2A0'];
 
+export function CardBadges({ result }: CardBadgesProps) {
   return (
     <div
-      className={`bg-white text-[#253D2C] flex flex-col justify-between border-4 border-[#2E6F40] ${
-        isLandscape ? 'w-[1200px] h-[750px] p-10' : 'w-[1080px] h-[1350px] p-12'
-      }`}
+      className="bg-[#FFF8E7] text-[#183B2B] flex flex-col justify-between border-[12px] border-[#174A32] w-[1080px] h-[1350px] p-9"
       style={{
         fontFamily: "'Hind Siliguri', 'Noto Sans Bengali', 'Anek Bangla', system-ui, sans-serif",
-        backgroundImage: 'radial-gradient(rgba(46, 111, 64, 0.08) 2px, transparent 0)',
-        backgroundSize: '32px 32px',
+        backgroundImage: 'radial-gradient(rgba(202, 137, 37, 0.13) 2px, transparent 0)',
+        backgroundSize: '28px 28px',
         boxSizing: 'border-box',
       }}
     >
-      {/* Top Header */}
-      <div className="flex items-center justify-between border-b-4 border-[#2E6F40]/25 pb-5">
-        <div className="flex items-center gap-4">
-          <div className="w-18 h-18 rounded-full overflow-hidden border-3 border-[#2E6F40] shadow-md shrink-0 bg-[#253D2C]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logo-shoishob.png"
-              alt="শৈশব লোগো"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="flex flex-col gap-1">
-            <h2 className="text-3xl font-black tracking-tight text-[#253D2C] leading-none m-0 p-0 whitespace-nowrap">
-              অর্জিত স্মৃতিচিহ্ন ও ব্যাজ
-            </h2>
-            <p className="text-sm font-bold text-[#2E6F40] tracking-wider uppercase m-0 p-0 whitespace-nowrap">
-              কুইজের উত্তরে আনলক করা শৈশব ট্রফি
-            </p>
-          </div>
+      <header className="flex items-center gap-4 rounded-2xl bg-[#174A32] px-6 py-5 shadow-lg">
+        <div className="w-18 h-18 rounded-full overflow-hidden border-3 border-[#F6C453] shrink-0 bg-[#102F22]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo-shoishob.png" alt="" className="w-full h-full object-cover" />
         </div>
-        <div className="text-right flex flex-col gap-0.5 shrink-0">
-          <span className="text-xs text-[#253D2C]/70 block font-semibold uppercase">
-            স্মৃতি আর্কিটাইপ
-          </span>
-          <span className="text-base font-black text-[#2E6F40] block leading-tight whitespace-nowrap">
-            {result.archetype.titleBn}
-          </span>
-        </div>
-      </div>
+        <h1 className="text-6xl font-black tracking-tight text-white leading-tight m-0 p-0">
+          আমার শৈশবের ব্যাজ
+        </h1>
+      </header>
 
-      {/* Center Grid of Badges */}
-      <div className="my-auto py-4">
-        <div className="text-center mb-6">
-          <span className="text-sm font-bold text-[#2E6F40] uppercase tracking-wider block">
-            আপনার স্মৃতি ভল্ট
-          </span>
-          <h2 className="text-2xl font-black text-[#253D2C] mt-1 m-0 p-0">
-            যে স্মৃতির ব্যাজগুলো অর্জন করেছেন আপনি
-          </h2>
-        </div>
-
-        <div
-          className={`grid ${
-            isLandscape ? 'grid-cols-3 gap-4' : 'grid-cols-2 gap-4'
-          }`}
-        >
-          {result.badges.slice(0, 6).map((badge) => (
+      <div className="my-auto py-5">
+        <div className="grid grid-cols-2 gap-4">
+          {result.badges.slice(0, 6).map((badge, idx) => (
             <div
               key={badge.id}
-              className="bg-[#F8FCF9] border-2 border-[#2E6F40]/20 rounded-2xl p-4 flex flex-col items-center text-center shadow-xs"
+              className="border-2 border-white/90 rounded-2xl p-5 flex flex-col items-center justify-center text-center shadow-md min-h-56"
+              style={{ backgroundColor: tileColors[idx % tileColors.length] }}
             >
-              <span className="text-4xl mb-2">{badge.icon}</span>
-              <h3 className="text-base font-bold text-[#253D2C] m-0 p-0">
+              <span className="text-5xl mb-2">{badge.icon}</span>
+              <h2 className="text-4xl font-bold text-[#183B2B] leading-tight m-0 p-0">
                 {badge.titleBn}
-              </h3>
-              <p className="text-xs text-[#253D2C]/75 mt-1 leading-relaxed m-0 p-0">
-                {badge.descriptionBn}
-              </p>
+              </h2>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Footer Score Bar */}
-      <div>
-        <div className="rounded-2xl bg-[#253D2C] text-white p-5 flex items-center justify-between shadow-lg">
-          <div className="flex items-center gap-4">
-            <div className="w-13 h-13 rounded-xl bg-[#2E6F40] flex items-center justify-center font-bold border border-[#68BA7F] shrink-0">
-              <Trophy className="w-7 h-7 text-[#CFFFD6]" />
-            </div>
-            <div className="flex flex-col gap-0.5">
-              <span className="text-xs font-bold text-[#68BA7F] uppercase tracking-wider block">
-                মোট আনলক করা স্মৃতিচিহ্ন
-              </span>
-              <span className="text-2xl font-extrabold text-white block leading-none whitespace-nowrap mt-0.5">
-                {result.badges.length}টি ব্যাজ অর্জিত · {result.nostalgiaScore}% খাঁটি
-              </span>
-            </div>
-          </div>
-
-          <div className="text-right shrink-0 flex flex-col gap-0.5">
-            <span className="text-xs text-white/70 block uppercase font-medium">
-              স্মৃতি যুগ
-            </span>
-            <span className="text-base font-bold text-[#CFFFD6] block leading-none whitespace-nowrap mt-0.5">
-              {result.era.titleBn}
-            </span>
-          </div>
+      <footer className="rounded-2xl bg-[#174A32] text-white p-6 flex items-center gap-5 shadow-xl border-2 border-[#F6C453]">
+        <div className="w-16 h-16 rounded-2xl bg-[#F6C453] flex items-center justify-center shrink-0">
+          <Trophy className="w-9 h-9 text-[#174A32]" />
         </div>
-
-        <div className="mt-4 pt-3 border-t-2 border-[#2E6F40]/15 flex items-center justify-between text-xs font-semibold text-[#253D2C]/70">
-          <span className="truncate">কালেকশন আইডি: {result.id}</span>
-          <span className="flex items-center gap-1.5 text-[#2E6F40] font-bold shrink-0">
-            <Sparkles className="w-4 h-4" />
-            <span>shoishob-bd.vercel.app</span>
-          </span>
+        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+          <span className="text-5xl font-extrabold leading-tight">{result.badges.length}টি ব্যাজ</span>
+          <span className="text-4xl font-bold text-[#F6C453]">{result.nostalgiaScore}% নস্টালজিয়া</span>
         </div>
-      </div>
+      </footer>
     </div>
   );
 }

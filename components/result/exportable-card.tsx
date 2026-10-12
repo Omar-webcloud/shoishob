@@ -8,14 +8,12 @@ import { CardBadges } from './cards/card-badges';
 interface ExportableCardProps {
   result: ChildhoodResult;
   cardType?: ResultCardType;
-  orientation?: 'portrait' | 'landscape';
 }
 
 export const ExportableCard = React.forwardRef<HTMLDivElement, ExportableCardProps>(
-  ({ result, cardType = 'identity', orientation = 'portrait' }, ref) => {
-    const isLandscape = orientation === 'landscape';
-    const width = isLandscape ? 1200 : 1080;
-    const height = isLandscape ? 750 : 1350;
+  ({ result, cardType = 'identity' }, ref) => {
+    const width = 1080;
+    const height = 1350;
 
     return (
       <div
@@ -34,16 +32,16 @@ export const ExportableCard = React.forwardRef<HTMLDivElement, ExportableCardPro
         }}
       >
         {cardType === 'memories_log' && (
-          <CardMemoriesLog result={result} orientation={orientation} />
+          <CardMemoriesLog result={result} />
         )}
         {cardType === 'certificate' && (
-          <CardCertificate result={result} orientation={orientation} />
+          <CardCertificate result={result} />
         )}
         {cardType === 'badges_showcase' && (
-          <CardBadges result={result} orientation={orientation} />
+          <CardBadges result={result} />
         )}
         {cardType === 'identity' && (
-          <CardIdentity result={result} orientation={orientation} />
+          <CardIdentity result={result} />
         )}
       </div>
     );

@@ -1,132 +1,66 @@
 import React from 'react';
 import { ChildhoodResult } from '@/types/result';
-import { Sparkles, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, ShieldCheck } from 'lucide-react';
 
 export interface CardCertificateProps {
   result: ChildhoodResult;
-  orientation?: 'portrait' | 'landscape';
 }
 
-export function CardCertificate({
-  result,
-  orientation = 'portrait',
-}: CardCertificateProps) {
-  const isLandscape = orientation === 'landscape';
-
+export function CardCertificate({ result }: CardCertificateProps) {
   return (
     <div
-      className={`bg-[#FCFDFB] text-[#253D2C] flex flex-col justify-between border-8 border-double border-[#2E6F40] ${
-        isLandscape ? 'w-[1200px] h-[750px] p-10' : 'w-[1080px] h-[1350px] p-12'
-      }`}
+      className="bg-[#FFF8E7] text-[#183B2B] flex flex-col justify-between border-[12px] border-[#174A32] w-[1080px] h-[1350px] p-9"
       style={{
         fontFamily: "'Hind Siliguri', 'Noto Sans Bengali', 'Anek Bangla', system-ui, sans-serif",
-        backgroundImage: 'radial-gradient(rgba(46, 111, 64, 0.05) 2px, transparent 0)',
+        backgroundImage: 'radial-gradient(rgba(202, 137, 37, 0.13) 2px, transparent 0)',
         backgroundSize: '28px 28px',
         boxSizing: 'border-box',
       }}
     >
-      {/* Certificate Header */}
-      <div className="text-center border-b-4 border-[#2E6F40]/25 pb-5">
-        <div className="w-18 h-18 rounded-full overflow-hidden border-2 border-[#2E6F40] shadow-md mx-auto mb-2 bg-[#253D2C]">
+      <header className="flex items-center gap-5 rounded-2xl bg-[#174A32] px-6 py-5 shadow-lg">
+        <div className="w-20 h-20 rounded-full overflow-hidden border-3 border-[#F6C453] shrink-0 bg-[#102F22]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/logo-shoishob.png"
-            alt="শৈশব লোগো"
-            className="w-full h-full object-cover"
-          />
+          <img src="/logo-shoishob.png" alt="" className="w-full h-full object-cover" />
         </div>
-        <div className="flex flex-col items-center gap-1">
-          <span className="text-xs font-bold text-[#2E6F40] tracking-widest uppercase block whitespace-nowrap">
-            বাংলাদেশ শৈশব সংরক্ষণ কর্তৃপক্ষ · আর্কাইভ সনদ
-          </span>
-          <h1 className="text-4xl font-black text-[#253D2C] tracking-tight m-0 p-0 whitespace-nowrap">
-            খাঁটি শৈশব সনদপত্র
-          </h1>
-          <p className="text-xs text-[#253D2C]/70 tracking-widest uppercase m-0 p-0 whitespace-nowrap">
-            CERTIFICATE OF AUTHENTIC CHILDHOOD NOSTALGIA
-          </p>
-        </div>
-      </div>
+        <h1 className="text-6xl font-black text-white leading-tight m-0 p-0">শৈশব সনদপত্র</h1>
+      </header>
 
-      {/* Certificate Main Body */}
-      <div className="my-auto py-4 text-center max-w-3xl mx-auto space-y-6">
-        <p className="text-lg text-[#253D2C]/85 leading-relaxed font-medium">
-          যথাযথ কুইজ যাচাই ও স্মৃতি রোমন্থন শেষে আনুষ্ঠানিকভাবে প্রত্যয়ন করা যাইতেছে যে, উপরোক্ত স্মৃতিধারী ব্যক্তি ৯০ ও ২০০০ দশকের সোনালী শৈশব ঐতিহ্যের এক পরম অংশীদার।
-        </p>
-
-        {/* Conferred Title Ribbon */}
-        <div className="bg-[#F0FAF3] border-3 border-[#2E6F40] rounded-2xl p-5 shadow-xs">
-          <span className="text-xs font-bold text-[#2E6F40] uppercase tracking-wider block mb-1">
-            প্রদত্ত শৈশব উপাধি:
-          </span>
-          <h2 className="text-3xl font-black text-[#253D2C] m-0 p-0">
+      <main className="my-auto py-5 space-y-6">
+        <section className="rounded-3xl bg-[#F6C453] border-4 border-white p-7 text-center shadow-lg">
+          <h2 className="text-7xl font-black text-[#174A32] leading-tight m-0 p-0">
             {result.archetype.titleBn}
           </h2>
-          <p className="text-sm font-semibold text-[#2E6F40] mt-1.5 m-0 p-0">
-            {result.archetype.titleEn} · {result.era.titleBn} ({result.era.approxYears})
+          <p className="text-3xl font-bold text-[#71430F] mt-3 m-0 p-0">
+            {result.era.titleBn} · {result.era.approxYears}
           </p>
-        </div>
+        </section>
 
-        {/* Dimension Scores Table */}
-        <div className="bg-white border-2 border-[#2E6F40]/20 rounded-2xl p-4 text-left">
-          <span className="text-xs font-bold text-[#253D2C]/70 block mb-2.5 text-center uppercase tracking-wider">
-            মূল্যায়িত স্মৃতি ডাইমেনশন:
-          </span>
-          <div className="grid grid-cols-2 gap-2.5 text-xs">
-            {result.dimensions.map((dim) => (
+        <section className="rounded-3xl bg-white border-2 border-[#174A32]/20 p-5 shadow-md">
+          <div className="grid grid-cols-2 gap-3">
+            {result.dimensions.map((dim, idx) => (
               <div
                 key={dim.key}
-                className="flex items-center justify-between p-2.5 rounded-xl bg-[#F8FCF9] border border-[#2E6F40]/10"
+                className="flex items-center justify-between gap-3 p-4 rounded-xl border border-white"
+                style={{ backgroundColor: ['#DDF4E4', '#D6E8FA', '#FCE7B2', '#F8D7D1', '#E7D9F5'][idx % 5] }}
               >
-                <span className="font-semibold text-[#253D2C] flex items-center gap-1.5 truncate">
-                  <CheckCircle2 className="w-4 h-4 text-[#2E6F40] shrink-0" />
+                <span className="font-bold text-3xl text-[#183B2B] flex items-center gap-2 min-w-0">
+                  <CheckCircle2 className="w-7 h-7 text-[#174A32] shrink-0" />
                   <span className="truncate">{dim.nameBn}</span>
                 </span>
-                <span className="font-bold text-[#2E6F40] shrink-0 ml-2">{dim.percentage}%</span>
+                <span className="font-black text-3xl text-[#174A32] shrink-0">{dim.percentage}%</span>
               </div>
             ))}
           </div>
+        </section>
+      </main>
+
+      <footer className="rounded-2xl bg-[#174A32] text-white px-7 py-5 flex items-center justify-between shadow-xl border-2 border-[#F6C453]">
+        <div className="flex items-center gap-4">
+          <ShieldCheck className="w-14 h-14 text-[#F6C453] shrink-0" />
+          <span className="text-4xl font-bold text-[#F6C453]">খাঁটি শৈশব</span>
         </div>
-      </div>
-
-      {/* Certificate Footer with Seals */}
-      <div>
-        <div className="flex items-center justify-between border-t-4 border-[#2E6F40]/20 pt-4 text-xs">
-          <div className="text-left flex flex-col gap-1">
-            <span className="text-xs text-[#253D2C]/60 block uppercase font-medium">
-              সনদপত্র নম্বর
-            </span>
-            <span className="font-bold text-sm text-[#253D2C] block font-mono">
-              {result.id}
-            </span>
-            <span className="text-xs text-[#2E6F40] font-semibold block">
-              ইস্যু তারিখ: {new Date().toLocaleDateString('bn-BD')}
-            </span>
-          </div>
-
-          {/* Official Vintage Seal */}
-          <div className="w-24 h-24 rounded-full border-4 border-dashed border-[#2E6F40] flex flex-col items-center justify-center p-1.5 text-center bg-[#CFFFD6]/50 shadow-xs shrink-0 gap-1">
-            <ShieldCheck className="w-7 h-7 text-[#2E6F40] shrink-0" />
-            <span className="text-xs font-black text-[#253D2C] uppercase leading-none whitespace-nowrap">
-              {result.nostalgiaScore}% খাঁটি
-            </span>
-            <span className="text-[9px] text-[#2E6F40] font-bold leading-none">যাচাইকৃত</span>
-          </div>
-
-          <div className="text-right flex flex-col gap-1">
-            <span className="text-xs text-[#253D2C]/60 block uppercase font-medium">
-              অনলাইন যাচাই লিংক
-            </span>
-            <span className="font-bold text-sm text-[#2E6F40] flex items-center gap-1.5 justify-end">
-              <Sparkles className="w-4 h-4" />
-              <span>shoishob-bd.vercel.app</span>
-            </span>
-            <span className="text-xs text-[#253D2C]/70 block italic">
-              আমার শৈশব আর্কাইভ
-            </span>
-          </div>
-        </div>
-      </div>
+        <span className="text-6xl font-black">{result.nostalgiaScore}%</span>
+      </footer>
     </div>
   );
 }

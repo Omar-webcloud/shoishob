@@ -8,23 +8,21 @@ import { CardBadges } from './cards/card-badges';
 export interface IdentityCardProps {
   result: ChildhoodResult;
   cardType?: ResultCardType;
-  orientation?: 'portrait' | 'landscape';
 }
 
 export function IdentityCard({
   result,
   cardType = 'identity',
-  orientation = 'portrait',
 }: IdentityCardProps) {
   switch (cardType) {
     case 'memories_log':
-      return <CardMemoriesLog result={result} orientation={orientation} />;
+      return <CardMemoriesLog result={result} />;
     case 'certificate':
-      return <CardCertificate result={result} orientation={orientation} />;
+      return <CardCertificate result={result} />;
     case 'badges_showcase':
-      return <CardBadges result={result} orientation={orientation} />;
+      return <CardBadges result={result} />;
     case 'identity':
     default:
-      return <CardIdentity result={result} orientation={orientation} />;
+      return <CardIdentity result={result} />;
   }
 }

@@ -16,13 +16,11 @@ export const CURRENT_SCHEMA_VERSION = '1.0';
 export interface UserPreferences {
   language: 'bn' | 'en';
   preferredExportFormat: 'png' | 'jpg';
-  preferredCardOrientation: 'portrait' | 'landscape';
 }
 
 export const DEFAULT_PREFERENCES: UserPreferences = {
   language: 'bn',
   preferredExportFormat: 'png',
-  preferredCardOrientation: 'portrait',
 };
 
 // In-memory fallback if localStorage is disabled or throws QuotaExceededError in incognito

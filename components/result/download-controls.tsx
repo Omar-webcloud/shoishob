@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Download, Share2, AlertCircle, CheckCircle2, ExternalLink } from 'lucide-react';
-import { ExportFormat, CardOrientation } from '@/lib/export-image';
+import { ExportFormat } from '@/lib/export-image';
 
 interface DownloadControlsProps {
   onExport: (format: ExportFormat) => void;
@@ -12,8 +12,6 @@ interface DownloadControlsProps {
   canWebShare: boolean;
   isInApp: boolean;
   inAppPlatform: string | null;
-  orientation: CardOrientation;
-  onChangeOrientation: (orientation: CardOrientation) => void;
   statusMessage: { type: 'success' | 'error' | 'info'; text: string } | null;
 }
 
@@ -24,8 +22,6 @@ export function DownloadControls({
   isExporting,
   canWebShare,
   isInApp,
-  orientation,
-  onChangeOrientation,
   statusMessage,
 }: DownloadControlsProps) {
   return (
@@ -48,37 +44,18 @@ export function DownloadControls({
         </div>
       )}
 
-      {/* Orientation & Format Switcher */}
-      <div className="flex items-center justify-between gap-2">
-        <span className="text-xs font-bold text-[#253D2C]/80">ফরম্যাট সাইজ:</span>
-        <div className="inline-flex p-1 rounded-xl bg-[#F0FAF3] border border-[#2E6F40]/15 text-xs font-semibold">
-          <button
-            type="button"
-            onClick={() => onChangeOrientation('portrait')}
-            className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-              orientation === 'portrait'
-                ? 'bg-[#2E6F40] text-white shadow-xs font-bold'
-                : 'text-[#253D2C]/70 hover:text-[#253D2C]'
-            }`}
-          >
-            পোর্ট্রেট
-          </button>
-          <button
-            type="button"
-            onClick={() => onChangeOrientation('landscape')}
-            className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-              orientation === 'landscape'
-                ? 'bg-[#2E6F40] text-white shadow-xs font-bold'
-                : 'text-[#253D2C]/70 hover:text-[#253D2C]'
-            }`}
-          >
-            ল্যান্ডস্কেপ
-          </button>
+      <div className="flex items-center gap-3 rounded-xl bg-[#F0FAF3] border border-[#2E6F40]/15 px-3.5 py-3">
+        <span className="flex h-10 w-8 shrink-0 items-center justify-center rounded-md border-2 border-[#2E6F40]/40 bg-white text-[#2E6F40]">
+          <span className="h-5 w-3 rounded-sm border-2 border-current" />
+        </span>
+        <div className="min-w-0">
+          <p className="m-0 text-sm font-bold text-[#253D2C]">পোর্ট্রেট ছবি · 1080 × 1350</p>
+          <p className="m-0 text-xs text-[#253D2C]/70">ফোনে দেখা ও শেয়ার করার জন্য সাজানো</p>
         </div>
       </div>
 
       {/* Primary Download Buttons */}
-      <div className="grid grid-cols-2 gap-2.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
         <button
           type="button"
           onClick={() => onExport('png')}

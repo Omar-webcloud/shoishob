@@ -10,18 +10,16 @@ import { CardMemoriesLog } from './cards/card-memories-log';
 export interface ScaledCardProps {
   result: ChildhoodResult;
   cardType?: ResultCardType;
-  orientation?: 'portrait' | 'landscape';
   className?: string;
 }
 
 export const ScaledCard = forwardRef<HTMLDivElement, ScaledCardProps>(function ScaledCard(
-  { result, cardType = 'identity', orientation = 'portrait', className },
+  { result, cardType = 'identity', className },
   ref
 ) {
   const box = useRef<HTMLDivElement>(null);
-  const isLandscape = orientation === 'landscape';
-  const CARD_W = isLandscape ? 1200 : 1080;
-  const CARD_H = isLandscape ? 750 : 1350;
+  const CARD_W = 1080;
+  const CARD_H = 1350;
   const [scale, setScale] = useState(0.4);
 
   useEffect(() => {
@@ -41,14 +39,14 @@ export const ScaledCard = forwardRef<HTMLDivElement, ScaledCardProps>(function S
   const renderCard = () => {
     switch (cardType) {
       case 'certificate':
-        return <CardCertificate result={result} orientation={orientation} />;
+        return <CardCertificate result={result} />;
       case 'badges_showcase':
-        return <CardBadges result={result} orientation={orientation} />;
+        return <CardBadges result={result} />;
       case 'memories_log':
-        return <CardMemoriesLog result={result} orientation={orientation} />;
+        return <CardMemoriesLog result={result} />;
       case 'identity':
       default:
-        return <CardIdentity result={result} orientation={orientation} />;
+        return <CardIdentity result={result} />;
     }
   };
 

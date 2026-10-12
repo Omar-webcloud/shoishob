@@ -9,7 +9,6 @@ import { getQuizResult, saveQuizResult, clearAllShoishobData } from '@/lib/stora
 import { useQuizStore } from '@/lib/store';
 import {
   ExportFormat,
-  CardOrientation,
   detectInAppBrowser,
   getMobileOs,
   generateCardBlob,
@@ -66,7 +65,6 @@ export function ResultShell({ initialResult }: ResultShellProps) {
     getQuizResult();
 
   const [activeCardType, setActiveCardType] = useState<ResultCardType>('identity');
-  const [orientation, setOrientation] = useState<CardOrientation>('portrait');
   const [isExporting, setIsExporting] = useState(false);
   const [canWebShare] = useState<boolean>(() => {
     return typeof navigator !== 'undefined' && 'share' in navigator && 'canShare' in navigator;
@@ -169,7 +167,7 @@ export function ResultShell({ initialResult }: ResultShellProps) {
       if (os === 'ios' && inAppPlatform === 'facebook' && canWebShare && exportCardRef.current) {
         setIsExporting(true);
         try {
-          const blob = await generateCardBlob(exportCardRef.current, format, orientation);
+          const blob = await generateCardBlob(exportCardRef.current, format);
           const shared = await triggerNativeFileShare(
             blob,
             filename,
@@ -197,7 +195,7 @@ export function ResultShell({ initialResult }: ResultShellProps) {
     setStatusMessage(null);
 
     try {
-      const blob = await generateCardBlob(exportCardRef.current, format, orientation);
+      const blob = await generateCardBlob(exportCardRef.current, format);
       const url = URL.createObjectURL(blob);
 
       // Tier 1: Try direct anchor download (works in Chrome / Safari / Firefox)
@@ -281,7 +279,7 @@ export function ResultShell({ initialResult }: ResultShellProps) {
     const filename = `bangladesh-childhood-${cardSlug}-${result.archetype.id}.png`;
 
     try {
-      const blob = await generateCardBlob(exportCardRef.current, 'png', orientation);
+      const blob = await generateCardBlob(exportCardRef.current, 'png');
       const shared = await triggerNativeFileShare(
         blob,
         filename,
@@ -364,13 +362,14 @@ export function ResultShell({ initialResult }: ResultShellProps) {
       </div>
 
       {/* Card Switcher Tabs */}
-      <div className="flex items-center justify-center gap-1.5 sm:gap-2.5 flex-wrap">
+      <div className="grid grid-cols-2 gap-2 sm:flex sm:items-center sm:justify-center sm:flex-wrap sm:gap-2.5" role="group" aria-label="ডাউনলোড কার্ড বাছুন">
         {CARD_TABS.map((tab) => (
           <button
             key={tab.id}
             type="button"
             onClick={() => setActiveCardType(tab.id)}
-            className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+            aria-pressed={activeCardType === tab.id}
+            className={`min-h-11 justify-center px-2.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2E6F40] ${
               activeCardType === tab.id
                 ? 'bg-[#2E6F40] text-white shadow-sm'
                 : 'bg-white border border-[#2E6F40]/20 text-[#253D2C]/80 hover:bg-[#F0FAF3]'
@@ -388,16 +387,18 @@ export function ResultShell({ initialResult }: ResultShellProps) {
           ref={exportCardRef}
           result={result}
           cardType={activeCardType}
-          orientation={orientation}
         />
       </div>
 
       {/* Clean Download and Export Controls */}
-      <div className="tactile-card p-5 sm:p-6 bg-white space-y-3">
-        <div className="flex items-center justify-between">
-          <h3 className="text-base sm:text-lg font-bold text-[#253D2C]">
-            কার্ড ডাউনলোড করুন
-          </h3>
+      <div className="tactile-card p-4 sm:p-6 bg-white space-y-4">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <h3 className="text-base sm:text-lg font-bold text-[#253D2C]">
+              কার্ড ডাউনলোড করুন
+            </h3>
+            <p className="mt-0.5 text-xs sm:text-sm text-[#253D2C]/65">পছন্দের কার্ডটি ছবিতে সংরক্ষণ করুন</p>
+          </div>
           <span className="text-xs font-semibold text-[#2E6F40] bg-[#CFFFD6]/60 px-2.5 py-0.5 rounded-full">
             {CARD_TABS.find((t) => t.id === activeCardType)?.labelBn}
           </span>
@@ -411,8 +412,6 @@ export function ResultShell({ initialResult }: ResultShellProps) {
           canWebShare={canWebShare}
           isInApp={isInApp}
           inAppPlatform={inAppPlatform}
-          orientation={orientation}
-          onChangeOrientation={(o) => setOrientation(o)}
           statusMessage={statusMessage}
         />
       </div>
