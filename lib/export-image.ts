@@ -1,4 +1,4 @@
-import { toBlob } from 'html-to-image';
+import { toCanvas } from 'html-to-image';
 
 export type ExportFormat = 'png' | 'jpg';
 export type CardOrientation = 'portrait' | 'landscape';
@@ -15,6 +15,16 @@ export interface ExportResult {
   objectUrl?: string;
   error?: string;
   tierUsed: 'tier1_direct' | 'tier2_webshare' | 'tier3_modal_fallback';
+}
+
+// Convert Blob to base64 Data URL for robust mobile file saving
+export function blobToDataUrl(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = () => reject(reader.error ?? new Error('Could not read blob.'));
+    reader.readAsDataURL(blob);
+  });
 }
 
 // In-app browser detection
@@ -54,7 +64,6 @@ export function getMobileOs(): 'android' | 'ios' | 'desktop' {
 }
 
 // Trigger opening the current page in the default system browser (Chrome / Safari)
-// This bypasses the Facebook / Instagram in-app WebView download block!
 export function triggerOpenInExternalBrowser(url?: string): boolean {
   if (typeof window === 'undefined') return false;
   const targetUrl = url || window.location.href;
@@ -62,7 +71,6 @@ export function triggerOpenInExternalBrowser(url?: string): boolean {
   const os = getMobileOs();
 
   if (os === 'android') {
-    // Android Intent: triggers Android OS to launch Google Chrome or default system browser
     const chromeIntent = `intent://${cleanUrl}#Intent;scheme=https;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(targetUrl)};end`;
     const genericIntent = `intent://${cleanUrl}#Intent;scheme=https;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;end;`;
 
@@ -86,7 +94,6 @@ export function triggerOpenInExternalBrowser(url?: string): boolean {
   }
 
   if (os === 'ios') {
-    // On iOS Facebook browser, try breakout schemes
     try {
       window.location.href = `x-safari-https://${cleanUrl}`;
       return true;
@@ -116,130 +123,93 @@ export function triggerOpenInExternalBrowser(url?: string): boolean {
 export async function ensureFontsLoaded(): Promise<void> {
   if (typeof document !== 'undefined' && 'fonts' in document) {
     try {
-      await Promise.allSettled([
-        document.fonts.load('600 24px "Hind Siliguri"'),
-        document.fonts.load('600 24px "Noto Sans Bengali"'),
-        document.fonts.load('600 24px "Anek Bangla"'),
-        document.fonts.ready,
-      ]);
+      await document.fonts.ready;
     } catch (e) {
       console.warn('[Shoishob Export] Font ready check error, continuing:', e);
     }
   }
 }
 
-let cachedFontCSS: string | null = null;
-
-// Safely fetch and cache the Google Fonts CSS string.
-// Passing this directly as fontEmbedCSS prevents html-to-image from accessing document.styleSheets,
-// which completely avoids CORS SecurityError on cross-origin stylesheets or extensions.
-export async function getSafeFontEmbedCSS(): Promise<string> {
-  if (cachedFontCSS !== null) return cachedFontCSS;
-  if (typeof window === 'undefined') return '';
-
-  try {
-    const res = await fetch(
-      'https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap'
-    );
-    if (res.ok) {
-      cachedFontCSS = await res.text();
-      return cachedFontCSS;
-    }
-  } catch (err) {
-    console.warn('[Shoishob Export] Font CSS prefetch skipped, using fallback:', err);
-  }
-
-  cachedFontCSS = '';
-  return cachedFontCSS;
+// Two-pass rendering helper: first pass warms up fonts/images, second produces final canvas
+async function renderToCanvas(node: HTMLElement, pixelRatio: number): Promise<HTMLCanvasElement> {
+  const options = {
+    pixelRatio,
+    cacheBust: false,
+    style: { transform: 'none', margin: '0' },
+  };
+  // First pass warms up layout, fonts and images
+  await toCanvas(node, options);
+  // Second pass returns the clean pixel-perfect canvas
+  return toCanvas(node, options);
 }
 
-// Generate Blob from card element with pixelRatio 2 and safe font fallbacks
+// Generate Blob directly from the live DOM node with exact styling
 export async function generateCardBlob(
   element: HTMLElement,
-  format: ExportFormat
+  format: ExportFormat,
+  _orientation: CardOrientation = 'portrait'
 ): Promise<Blob> {
   await ensureFontsLoaded();
-  const fontEmbedCSS = await getSafeFontEmbedCSS();
 
   const isJpg = format === 'jpg';
   const mimeType = isJpg ? 'image/jpeg' : 'image/png';
   const quality = isJpg ? 0.95 : 1.0;
 
-  // 1. Try high-resolution rendering with fontEmbedCSS (pixelRatio: 2)
+  // 1. High-res pass at pixelRatio: 2
   try {
-    const blob = await toBlob(element, {
-      type: mimeType,
-      quality,
-      pixelRatio: 2,
-      cacheBust: true,
-      skipAutoScale: false,
-      fontEmbedCSS: fontEmbedCSS || undefined,
-      skipFonts: !fontEmbedCSS,
-    });
+    const canvas = await renderToCanvas(element, 2);
+    const blob: Blob | null = await new Promise((resolve) =>
+      canvas.toBlob(resolve, mimeType, quality)
+    );
 
     if (blob && blob.size > 1000) {
       return blob;
     }
-    throw new Error('Rendered Blob is empty or invalid');
-  } catch (highResError) {
-    console.warn('[Shoishob Export] High-res render failed, attempting fallback (pixelRatio: 1):', highResError);
+    throw new Error('Rendered high-res canvas produced empty Blob');
+  } catch (err) {
+    console.warn('[Shoishob Export] High-res render failed, attempting pixelRatio: 1 fallback:', err);
 
-    // 2. Retry at pixelRatio: 1 with fontEmbedCSS
-    try {
-      const fallbackBlob = await toBlob(element, {
-        type: mimeType,
-        quality,
-        pixelRatio: 1,
-        cacheBust: true,
-        fontEmbedCSS: fontEmbedCSS || undefined,
-        skipFonts: !fontEmbedCSS,
-      });
+    // 2. Fallback pass at pixelRatio: 1
+    const fallbackCanvas = await renderToCanvas(element, 1);
+    const fallbackBlob: Blob | null = await new Promise((resolve) =>
+      fallbackCanvas.toBlob(resolve, mimeType, quality)
+    );
 
-      if (fallbackBlob && fallbackBlob.size > 1000) {
-        return fallbackBlob;
-      }
-      throw new Error('Fallback rendered Blob is empty or invalid');
-    } catch (fallbackError) {
-      console.warn('[Shoishob Export] Fallback render failed, trying ultimate safe render (skipFonts: true):', fallbackError);
-
-      // 3. Ultimate safe retry: skipFonts: true (completely bypasses all stylesheet inspection)
-      const safeBlob = await toBlob(element, {
-        type: mimeType,
-        quality,
-        pixelRatio: 1,
-        cacheBust: true,
-        skipFonts: true,
-      });
-
-      if (!safeBlob || safeBlob.size < 1000) {
-        throw new Error('Image export failed to generate a valid image.');
-      }
-      return safeBlob;
+    if (!fallbackBlob || fallbackBlob.size < 1000) {
+      throw new Error('Image export failed to generate a valid image.');
     }
+    return fallbackBlob;
   }
 }
 
-// Tier 1: Direct Anchor Download
-export function triggerDirectDownload(blob: Blob, filename: string): boolean {
+// Tier 1: Direct Anchor Download via Data URL
+export async function triggerDirectDownload(blob: Blob, filename: string): Promise<boolean> {
   try {
-    const url = URL.createObjectURL(blob);
+    const dataUrl = await blobToDataUrl(blob);
     const link = document.createElement('a');
-    link.href = url;
+    link.href = dataUrl;
     link.download = filename;
     link.style.display = 'none';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-
-    // Safely revoke after sufficient delay so the browser can start saving
-    setTimeout(() => {
-      URL.revokeObjectURL(url);
-    }, 15000);
-
     return true;
   } catch (err) {
-    console.warn('[Shoishob Export] Direct download failed:', err);
-    return false;
+    console.warn('[Shoishob Export] Direct data URL download failed, falling back to ObjectURL:', err);
+    try {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(url), 15000);
+      return true;
+    } catch {
+      return false;
+    }
   }
 }
 
@@ -265,7 +235,6 @@ export async function triggerNativeFileShare(
     }
     return false;
   } catch (err: unknown) {
-    // If user cancelled, that's not an error
     if (err instanceof Error && err.name === 'AbortError') {
       return true;
     }

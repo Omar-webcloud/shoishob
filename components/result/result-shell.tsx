@@ -18,8 +18,7 @@ import {
   triggerOpenInExternalBrowser,
 } from '@/lib/export-image';
 import { encodeResultToShareQuery, decodeShareQueryToResult } from '@/lib/share';
-import { IdentityCard } from './identity-card';
-import { ExportableCard } from './exportable-card';
+import { ScaledCard } from './scaled-card';
 import { DownloadControls } from './download-controls';
 import { ShareActions } from './share-actions';
 import { ScoreBreakdown } from './score-breakdown';
@@ -170,7 +169,7 @@ export function ResultShell({ initialResult }: ResultShellProps) {
       if (os === 'ios' && inAppPlatform === 'facebook' && canWebShare && exportCardRef.current) {
         setIsExporting(true);
         try {
-          const blob = await generateCardBlob(exportCardRef.current, format);
+          const blob = await generateCardBlob(exportCardRef.current, format, orientation);
           const shared = await triggerNativeFileShare(
             blob,
             filename,
@@ -198,7 +197,7 @@ export function ResultShell({ initialResult }: ResultShellProps) {
     setStatusMessage(null);
 
     try {
-      const blob = await generateCardBlob(exportCardRef.current, format);
+      const blob = await generateCardBlob(exportCardRef.current, format, orientation);
       const url = URL.createObjectURL(blob);
 
       // Tier 1: Try direct anchor download (works in Chrome / Safari / Firefox)
@@ -282,7 +281,7 @@ export function ResultShell({ initialResult }: ResultShellProps) {
     const filename = `bangladesh-childhood-${cardSlug}-${result.archetype.id}.png`;
 
     try {
-      const blob = await generateCardBlob(exportCardRef.current, 'png');
+      const blob = await generateCardBlob(exportCardRef.current, 'png', orientation);
       const shared = await triggerNativeFileShare(
         blob,
         filename,
@@ -383,9 +382,10 @@ export function ResultShell({ initialResult }: ResultShellProps) {
         ))}
       </div>
 
-      {/* Main Identity Card Preview */}
-      <div className="w-full">
-        <IdentityCard
+      {/* Main Identity Card Preview (WYSIWYG ScaledCard) */}
+      <div className="w-full max-w-xl mx-auto shadow-2xl rounded-3xl overflow-hidden border-2 border-[#2E6F40]/25 bg-white">
+        <ScaledCard
+          ref={exportCardRef}
           result={result}
           cardType={activeCardType}
           orientation={orientation}
@@ -457,26 +457,7 @@ export function ResultShell({ initialResult }: ResultShellProps) {
         </div>
       </div>
 
-      {/* HIDDEN OFF-SCREEN FIXED-DIMENSION EXPORT CONTAINER */}
-      {/* Fixed output dimensions 1080x1350 / 1200x750 independent of viewport */}
-      <div
-        style={{
-          position: 'fixed',
-          left: '-99999px',
-          top: '-99999px',
-          pointerEvents: 'none',
-          overflow: 'hidden',
-          zIndex: -100,
-        }}
-        aria-hidden="true"
-      >
-        <ExportableCard
-          ref={exportCardRef}
-          result={result}
-          cardType={activeCardType}
-          orientation={orientation}
-        />
-      </div>
+
 
       {/* Modals */}
       <SaveImageDialog

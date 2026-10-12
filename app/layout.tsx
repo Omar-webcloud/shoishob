@@ -1,5 +1,27 @@
 import type { Metadata, Viewport } from 'next';
+import { Hind_Siliguri, Noto_Sans_Bengali, Outfit } from 'next/font/google';
 import './globals.css';
+
+const hindSiliguri = Hind_Siliguri({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['bengali', 'latin'],
+  variable: '--font-hind-siliguri',
+  display: 'swap',
+});
+
+const notoSansBengali = Noto_Sans_Bengali({
+  weight: ['400', '500', '600', '700', '800'],
+  subsets: ['bengali'],
+  variable: '--font-noto-sans-bn',
+  display: 'swap',
+});
+
+const outfit = Outfit({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin'],
+  variable: '--font-outfit',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://shoishob-bd.vercel.app'),
@@ -52,16 +74,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="bn" className="scroll-smooth">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          crossOrigin="anonymous"
-          href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap"
-        />
-      </head>
+    <html
+      lang="bn"
+      className={`scroll-smooth ${hindSiliguri.variable} ${notoSansBengali.variable} ${outfit.variable}`}
+    >
       <body className="paper-pattern min-h-screen flex flex-col text-[#253D2C] selection:bg-[#CFFFD6] selection:text-[#253D2C]">
         {children}
       </body>

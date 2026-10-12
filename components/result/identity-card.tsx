@@ -5,7 +5,7 @@ import { CardMemoriesLog } from './cards/card-memories-log';
 import { CardCertificate } from './cards/card-certificate';
 import { CardBadges } from './cards/card-badges';
 
-interface IdentityCardProps {
+export interface IdentityCardProps {
   result: ChildhoodResult;
   cardType?: ResultCardType;
   orientation?: 'portrait' | 'landscape';
@@ -18,13 +18,13 @@ export function IdentityCard({
 }: IdentityCardProps) {
   switch (cardType) {
     case 'memories_log':
-      return <CardMemoriesLog result={result} orientation={orientation} isExport={false} />;
+      return <CardMemoriesLog result={result} orientation={orientation} />;
     case 'certificate':
-      return <CardCertificate result={result} orientation={orientation} isExport={false} />;
+      return <CardCertificate result={result} orientation={orientation} />;
     case 'badges_showcase':
-      return <CardBadges result={result} orientation={orientation} isExport={false} />;
+      return <CardBadges result={result} orientation={orientation} />;
     case 'identity':
     default:
-      return <CardIdentity result={result} orientation={orientation} isExport={false} />;
+      return <CardIdentity result={result} orientation={orientation} />;
   }
 }
