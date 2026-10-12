@@ -199,7 +199,7 @@ export function calculateChildhoodProfile(answers: QuizAnswers): CalculatedScore
 function generateSignatureMemory(archetype: ArchetypeId): string {
   switch (archetype) {
     case 'street_legend':
-      return 'বিকেলের বন্ধুদের ডাক, শেষ ওভারের নাটকীয় ছক্কা আর সূর্য ডুবে অন্ধকার না হওয়া পর্যন্ত বাড়ি না ফেরা—এই ছিল আমার শৈশব!';
+      return 'বিকেলের বন্ধুদের ডাক, শেষ ওভারের নাটকীয় ছক্কা আর সূর্য ডুবে অন্ধকার না হওয়া পর্যন্ত বাড়ি না ফেরা। এই ছিল আমার শৈশব!';
     case 'cartoon_era':
       return 'শুক্রবার সকালে টিভির সামনে মাদুর পেতে বসা, অ্যান্টেনার ঝিরঝির ঠিক করা আর বিজ্ঞাপনের বিরতিতে পানি খাওয়ার দৌড় ছিল প্রতিদিনের জীবন!';
     case 'tiffin_time':

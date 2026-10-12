@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import confetti from 'canvas-confetti';
 import { ChildhoodResult } from '@/types/result';
-import { getQuizResult, clearAllShoishobData } from '@/lib/storage';
+import { getQuizResult } from '@/lib/storage';
+import { useQuizStore } from '@/lib/store';
 import {
   ExportFormat,
   CardOrientation,
@@ -29,7 +30,9 @@ interface ResultShellProps {
 
 export function ResultShell({ initialResult }: ResultShellProps) {
   const router = useRouter();
-  const [result] = useState<ChildhoodResult | null>(() => initialResult || getQuizResult());
+  const storeResult = useQuizStore((s) => s.result);
+  const clearAll = useQuizStore((s) => s.clearAll);
+  const result: ChildhoodResult | null = initialResult || storeResult || getQuizResult();
   const [orientation, setOrientation] = useState<CardOrientation>('portrait');
   const [isExporting, setIsExporting] = useState(false);
   const [canWebShare] = useState<boolean>(() => {
@@ -178,7 +181,7 @@ export function ResultShell({ initialResult }: ResultShellProps) {
 
   const handleClearData = () => {
     if (window.confirm('আপনি কি সমস্ত সংরক্ষিত শৈশব ডেটা মুছে ফেলতে চান?')) {
-      clearAllShoishobData();
+      clearAll();
       router.push('/');
     }
   };
@@ -233,9 +236,6 @@ export function ResultShell({ initialResult }: ResultShellProps) {
           <h3 className="text-xl font-bold text-[#253D2C]">
             পরিচয়পত্র সংরক্ষণ ও ডাউনলোড
           </h3>
-          <span className="text-xs font-bold text-[#2E6F40] bg-[#CFFFD6] px-2.5 py-1 rounded-full">
-            হাই-রেজ্যুলুশন এক্সপোর্ট
-          </span>
         </div>
 
         <DownloadControls

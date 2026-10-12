@@ -4,7 +4,7 @@ import { QuizAnswers } from '@/types/quiz';
 import { ChildhoodResult } from '@/types/result';
 import { QUIZ_QUESTIONS, ARCHETYPES_DATA, ERAS_DATA } from './quiz-data';
 import { generateChildhoodResult } from './result-generator';
-import { clearAllShoishobData } from './storage';
+import { saveQuizResult, getQuizResult, clearAllShoishobData } from './storage';
 
 interface QuizState {
   answers: QuizAnswers;
@@ -63,10 +63,12 @@ export const useQuizStore = create<QuizState>()(
         const { answers } = get();
         const freshResult = generateChildhoodResult(answers);
         set({ result: freshResult });
+        saveQuizResult(freshResult);
         return freshResult;
       },
 
       resetQuiz: () => {
+        clearAllShoishobData();
         set({
           answers: {},
           currentStep: 0,
@@ -103,17 +105,39 @@ export const useQuizStore = create<QuizState>()(
         if (state) {
           state.setHasHydrated(true);
 
+          // If no result in store state, try legacy storage
+          if (!state.result) {
+            const legacy = getQuizResult();
+            if (legacy) {
+              state.result = legacy;
+            }
+          }
+
           // Re-hydrate saved result with latest archetype and era definitions
           if (state.result && state.result.archetype) {
             const arch = ARCHETYPES_DATA[state.result.archetype.id];
             const era = ERAS_DATA[state.result.era.id];
-            if (arch || era) {
-              state.result = {
-                ...state.result,
-                archetype: arch || state.result.archetype,
-                era: era || state.result.era,
-              };
-            }
+
+            const sanitizeText = (txt: string) => {
+              if (!txt) return '';
+              return txt
+                .replace(/তোমার/g, 'আপনার')
+                .replace(/তুমি/g, 'আপনি')
+                .replace(/তোমাকে/g, 'আপনাকে')
+                .replace(/তোমাদের/g, 'আপনাদের')
+                .replace(/তোমরা/g, 'আপনারা')
+                .replace(/তোমায়/g, 'আপনাকে')
+                .replace(/প্রস্তুত হও/g, 'প্রস্তুত হোন')
+                .replace(/খুলে দেখো/g, 'খুলে দেখুন');
+            };
+
+            state.result = {
+              ...state.result,
+              archetype: arch || state.result.archetype,
+              era: era || state.result.era,
+              signatureMemoryBn: sanitizeText(state.result.signatureMemoryBn || (arch ? arch.taglineBn : '')),
+              selectedMemoryLabelsBn: (state.result.selectedMemoryLabelsBn || []).map(sanitizeText),
+            };
           }
         }
       },

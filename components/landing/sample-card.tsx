@@ -53,14 +53,7 @@ export function SampleCard() {
                   <span className="font-extrabold text-base sm:text-lg text-[#253D2C] tracking-tight block leading-tight">
                     আমার শৈশব · SHOISHOB
                   </span>
-                  <span className="text-[10px] uppercase font-bold text-[#2E6F40] tracking-wider block">
-                    বাংলাদেশি শৈশব পরিচয়পত্র
-                  </span>
                 </div>
-              </div>
-
-              <div className="nostalgia-stamp text-[10px] text-[#2E6F40] bg-[#CFFFD6]/50 shrink-0">
-                খাঁটি শৈশব · ভেরিফায়েড
               </div>
             </div>
 
@@ -83,7 +76,7 @@ export function SampleCard() {
             {/* Signature Memory Quote */}
             <div className="bg-[#F7FAF7] rounded-xl p-4 border border-[#2E6F40]/10 mb-4 text-center">
               <p className="text-xs sm:text-sm text-[#253D2C]/90 italic leading-relaxed">
-                “বিকেলের বন্ধুদের ডাক, শেষ ওভারের নাটকীয় ছক্কা আর সূর্য ডুবে অন্ধকার না হওয়া পর্যন্ত বাড়ি না ফেরা—এই ছিল আমার শৈশব!”
+                “বিকেলের বন্ধুদের ডাক, শেষ ওভারের নাটকীয় ছক্কা আর সূর্য ডুবে অন্ধকার না হওয়া পর্যন্ত বাড়ি না ফেরা। এই ছিল আমার শৈশব!”
               </p>
             </div>
 
@@ -139,7 +132,7 @@ export function SampleCard() {
             {/* Footer watermark */}
             <div className="pt-2 border-t border-[#2E6F40]/10 flex items-center justify-between text-[11px] text-[#253D2C]/60">
               <span>আইডি: BDCG-EXAMPLE-90S</span>
-              <span className="font-semibold text-[#2E6F40]">shoishob.vercel.app</span>
+              <span className="font-semibold text-[#2E6F40]">shoishob-bd.vercel.app</span>
             </div>
           </div>
 

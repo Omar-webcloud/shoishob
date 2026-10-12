@@ -50,9 +50,6 @@ export function ShareActions({ result, onOpenStoryGuide }: ShareActionsProps) {
             বন্ধুদের সাথে শেয়ার ও চ্যালেঞ্জ
           </h3>
         </div>
-        <span className="text-xs font-bold text-[#2E6F40] px-2.5 py-1 rounded-full bg-[#CFFFD6]">
-          ভাইরাল লুপ
-        </span>
       </div>
 
       <p className="text-xs sm:text-sm text-[#253D2C]/80 leading-relaxed">
@@ -115,7 +112,7 @@ export function ShareActions({ result, onOpenStoryGuide }: ShareActionsProps) {
         <div className="flex items-center gap-2.5">
           <Sparkles className="w-5 h-5 text-[#2E6F40] shrink-0" />
           <span className="text-xs sm:text-sm font-semibold text-[#253D2C]">
-            “আপনার শৈশব কোন যুগের ছিল?” — বন্ধুদের জিজ্ঞাসা করুন!
+            বন্ধুদের কাছেও জানতে চান তাদের শৈশব কেমন ছিল? এখনই চ্যালেঞ্জ করুন!
           </span>
         </div>
         <button

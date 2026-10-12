@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://shoishob-bd.vercel.app'),
   title: 'শৈশব · আপনার ছোটবেলার গল্পটা কেমন ছিল? | Bangladesh Childhood Generator',
   description:
     'বাংলাদেশের শৈশব, স্মৃতি আর নস্টালজিয়ার একটি অনন্য ইন্টার্যাক্টিভ অভিজ্ঞতা। ১০-১২টি সহজ প্রশ্নের উত্তর দিয়ে নিজের শৈশব পরিচয়পত্র তৈরি করুন ও বন্ধুদের সাথে শেয়ার করুন।',

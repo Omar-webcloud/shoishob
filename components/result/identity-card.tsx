@@ -37,14 +37,7 @@ export function IdentityCard({ result, orientation = 'portrait' }: IdentityCardP
             <span className="font-extrabold text-base sm:text-lg tracking-tight block leading-tight text-[#253D2C]">
               আমার শৈশব · SHOISHOB
             </span>
-            <span className="text-[10px] sm:text-[11px] uppercase font-bold text-[#2E6F40] tracking-wider block">
-              বাংলাদেশি শৈশব পরিচয়পত্র
-            </span>
           </div>
-        </div>
-
-        <div className="nostalgia-stamp text-[10px] sm:text-[11px] text-[#2E6F40] bg-[#CFFFD6]/50 shrink-0">
-          খাঁটি নস্টালজিয়া · অনুমোদিত
         </div>
       </div>
 
@@ -123,7 +116,7 @@ export function IdentityCard({ result, orientation = 'portrait' }: IdentityCardP
           <span>আইডি: {result.id}</span>
           <span className="flex items-center gap-1 font-semibold text-[#2E6F40]">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>shoishob.vercel.app</span>
+            <span>shoishob-bd.vercel.app</span>
           </span>
         </div>
       </div>

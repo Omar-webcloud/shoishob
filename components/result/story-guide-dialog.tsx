@@ -72,7 +72,7 @@ export function StoryGuideDialog({
             <div>
               <span className="font-bold block text-[#253D2C]">লিংক স্টিকার ও বন্ধুদের ট্যাগ</span>
               <span className="text-[#253D2C]/75 text-xs">
-                স্টিকারে <strong>shoishob.vercel.app</strong> লিংক যুক্ত করে বন্ধুদের চ্যালেঞ্জ করুন!
+                স্টিকারে <strong>shoishob-bd.vercel.app</strong> লিংক যুক্ত করে বন্ধুদের চ্যালেঞ্জ করুন!
               </span>
             </div>
           </div>
@@ -88,7 +88,7 @@ export function StoryGuideDialog({
             className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#2E6F40] hover:bg-[#253D2C] text-white font-bold text-sm shadow-sm transition-all"
           >
             <ImageIcon className="w-4 h-4" />
-            <span>কার্ড ডাউনলোড করে প্রস্তুত হও</span>
+            <span>কার্ড ডাউনলোড করে প্রস্তুত হোন</span>
           </button>
           <button
             onClick={onClose}

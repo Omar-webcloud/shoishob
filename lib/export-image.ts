@@ -48,7 +48,12 @@ export function detectInAppBrowser(): {
 export async function ensureFontsLoaded(): Promise<void> {
   if (typeof document !== 'undefined' && 'fonts' in document) {
     try {
-      await document.fonts.ready;
+      await Promise.allSettled([
+        document.fonts.load('600 24px "Hind Siliguri"'),
+        document.fonts.load('600 24px "Noto Sans Bengali"'),
+        document.fonts.load('600 24px "Anek Bangla"'),
+        document.fonts.ready,
+      ]);
     } catch (e) {
       console.warn('[Shoishob Export] Font ready check error, continuing:', e);
     }

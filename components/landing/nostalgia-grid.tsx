@@ -56,7 +56,7 @@ export function NostalgiaGrid() {
             বাংলাদেশের শৈশব সংকলন
           </span>
           <h2 className="text-2xl sm:text-3xl font-bold text-[#253D2C]">
-            স্মৃতির খাতা খুলে দেখো
+            স্মৃতির খাতা খুলে দেখুন
           </h2>
           <p className="text-sm text-[#253D2C]/75 mt-2">
             যে স্মৃতিগুলো দিয়ে তৈরি হয়েছে আমাদের সবার বেড়ে ওঠার রূপকথা

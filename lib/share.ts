@@ -74,7 +74,7 @@ export function decodeShareQueryToResult(encoded: string): ChildhoodResult | nul
 }
 
 export function getShareUrl(result: ChildhoodResult): string {
-  if (typeof window === 'undefined') return 'https://shoishob.vercel.app';
+  if (typeof window === 'undefined') return 'https://shoishob-bd.vercel.app';
   const encoded = encodeResultToShareQuery(result);
   return `${window.location.origin}/share?v=1&data=${encoded}`;
 }

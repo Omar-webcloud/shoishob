@@ -43,7 +43,7 @@ export function Footer() {
             </span>
           </div>
           <p className="text-xs text-[#253D2C]/75 mt-1 max-w-sm">
-            “আপনার ছোটবেলার গল্পটা কেমন ছিল?” — বাংলাদেশের শৈশব ও স্মৃতির ব্যক্তিগত পরিচয় জেনারেটর।
+            “আপনার ছোটবেলার গল্পটা কেমন ছিল?” বাংলাদেশের সোনালী শৈশব ও নস্টালজিয়ার স্মৃতিময় পরিচয়।
           </p>
         </div>
 
@@ -75,7 +75,7 @@ export function Footer() {
       </div>
 
       <div className="max-w-5xl mx-auto mt-8 pt-4 border-t border-[#2E6F40]/10 text-center text-xs text-[#253D2C]/60 flex flex-col sm:flex-row items-center justify-between gap-2">
-        <p>© ২০২৬ শৈশব (Shoishob). Designed with ❤️ for Bangladeshi Nostalgia.</p>
+        <p>© ২০২৬ শৈশব (Shoishob)</p>
         <p className="flex items-center gap-2">
           <Link href="/" className="hover:underline">হোম</Link>
           <span>·</span>

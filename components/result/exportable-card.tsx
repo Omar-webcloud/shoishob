@@ -20,7 +20,7 @@ export const ExportableCard = React.forwardRef<HTMLDivElement, ExportableCardPro
             : 'w-[1080px] h-[1350px] p-14'
         }`}
         style={{
-          fontFamily: "'Hind Siliguri', sans-serif",
+          fontFamily: "'Hind Siliguri', 'Noto Sans Bengali', 'Anek Bangla', system-ui, sans-serif",
           backgroundImage:
             'radial-gradient(rgba(46, 111, 64, 0.08) 2px, transparent 0)',
           backgroundSize: '36px 36px',
@@ -41,14 +41,7 @@ export const ExportableCard = React.forwardRef<HTMLDivElement, ExportableCardPro
               <span className="text-4xl font-black tracking-tight block text-[#253D2C]">
                 আমার শৈশব · SHOISHOB
               </span>
-              <span className="text-lg font-bold text-[#2E6F40] tracking-wider uppercase block mt-1">
-                বাংলাদেশি শৈশব পরিচয়পত্র · BANGLADESH CHILDHOOD IDENTITY CARD
-              </span>
             </div>
-          </div>
-
-          <div className="border-3 border-dashed border-[#2E6F40] px-6 py-2.5 rounded-full text-base font-bold text-[#2E6F40] bg-[#CFFFD6]/50 shrink-0">
-            খাঁটি নস্টালজিয়া · অফিসিয়াল স্মারক
           </div>
         </div>
 
@@ -132,7 +125,7 @@ export const ExportableCard = React.forwardRef<HTMLDivElement, ExportableCardPro
             <span>পরিচয়পত্র আইডি: {result.id}</span>
             <span className="flex items-center gap-2 text-[#2E6F40] font-bold text-lg">
               <Sparkles className="w-5 h-5" />
-              <span>shoishob.vercel.app</span>
+              <span>shoishob-bd.vercel.app</span>
             </span>
           </div>
         </div>

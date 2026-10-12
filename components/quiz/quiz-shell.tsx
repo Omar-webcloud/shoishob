@@ -3,19 +3,10 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { QUIZ_QUESTIONS } from '@/lib/quiz-data';
-import {
-  getQuizAnswers,
-  saveQuizAnswers,
-  getCurrentQuizStep,
-  saveCurrentQuizStep,
-  saveQuizResult,
-  clearAllShoishobData,
-} from '@/lib/storage';
-import { generateChildhoodResult } from '@/lib/result-generator';
+import { useQuizStore } from '@/lib/store';
 import { QuizProgress } from './quiz-progress';
 import { QuestionCard } from './question-card';
 import { QuizNavigation } from './quiz-navigation';
-import { QuizAnswers } from '@/types/quiz';
 
 const categoryLabelsBn: Record<string, string> = {
   school_life: 'স্কুলজীবন ও স্মৃতি',
@@ -30,11 +21,16 @@ const categoryLabelsBn: Record<string, string> = {
 
 export function QuizShell() {
   const router = useRouter();
-  const [currentStep, setCurrentStep] = useState<number>(() => {
-    const saved = getCurrentQuizStep();
-    return saved >= 0 && saved < QUIZ_QUESTIONS.length ? saved : 0;
-  });
-  const [answers, setAnswers] = useState<QuizAnswers>(() => getQuizAnswers());
+  const {
+    answers,
+    currentStep,
+    setAnswer,
+    nextStep,
+    prevStep,
+    generateAndSaveResult,
+    resetQuiz,
+  } = useQuizStore();
+
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const totalQuestions = QUIZ_QUESTIONS.length;
@@ -43,21 +39,13 @@ export function QuizShell() {
   // Option selection
   const handleSelectOption = (optionId: string) => {
     if (!currentQuestion) return;
-
-    const updatedAnswers = {
-      ...answers,
-      [currentQuestion.id]: optionId,
-    };
-    setAnswers(updatedAnswers);
-    saveQuizAnswers(updatedAnswers);
+    setAnswer(currentQuestion.id, optionId);
   };
 
   // Previous navigation
   const handlePrevious = () => {
     if (currentStep > 0) {
-      const prevStep = currentStep - 1;
-      setCurrentStep(prevStep);
-      saveCurrentQuizStep(prevStep);
+      prevStep();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -70,16 +58,13 @@ export function QuizShell() {
     if (!hasAnswered) return;
 
     if (currentStep < totalQuestions - 1) {
-      const nextStep = currentStep + 1;
-      setCurrentStep(nextStep);
-      saveCurrentQuizStep(nextStep);
+      nextStep();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       // Completed all questions! Generate result
       setIsSubmitting(true);
       try {
-        const result = generateChildhoodResult(answers);
-        saveQuizResult(result);
+        generateAndSaveResult();
         router.push('/result');
       } catch (err) {
         console.error('Failed to generate result:', err);
@@ -91,9 +76,7 @@ export function QuizShell() {
   // Restart quiz
   const handleRestart = () => {
     if (window.confirm('আপনি কি কুইজটি নতুন করে শুরু করতে চান? আগের উত্তরগুলো মুছে যাবে।')) {
-      clearAllShoishobData();
-      setAnswers({});
-      setCurrentStep(0);
+      resetQuiz();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };

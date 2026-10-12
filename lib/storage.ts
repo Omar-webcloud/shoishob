@@ -1,5 +1,6 @@
 import { QuizAnswers } from '@/types/quiz';
 import { ChildhoodResult } from '@/types/result';
+import { ARCHETYPES_DATA, ERAS_DATA } from './quiz-data';
 
 export const STORAGE_KEYS = {
   ANSWERS: 'bdcg_answers_v1',
@@ -120,7 +121,33 @@ export function saveQuizResult(result: ChildhoodResult): void {
 }
 
 export function getQuizResult(): ChildhoodResult | null {
-  return getFromStorage<ChildhoodResult | null>(STORAGE_KEYS.RESULT, null);
+  const result = getFromStorage<ChildhoodResult | null>(STORAGE_KEYS.RESULT, null);
+  if (!result || !result.archetype) return null;
+
+  // Clean & refresh with latest archetype & era definitions
+  const freshArch = ARCHETYPES_DATA[result.archetype.id] || result.archetype;
+  const freshEra = ERAS_DATA[result.era.id] || result.era;
+
+  const sanitizeText = (txt: string) => {
+    if (!txt) return '';
+    return txt
+      .replace(/তোমার/g, 'আপনার')
+      .replace(/তুমি/g, 'আপনি')
+      .replace(/তোমাকে/g, 'আপনাকে')
+      .replace(/তোমাদের/g, 'আপনাদের')
+      .replace(/তোমরা/g, 'আপনারা')
+      .replace(/তোমায়/g, 'আপনাকে')
+      .replace(/প্রস্তুত হও/g, 'প্রস্তুত হোন')
+      .replace(/খুলে দেখো/g, 'খুলে দেখুন');
+  };
+
+  return {
+    ...result,
+    archetype: freshArch,
+    era: freshEra,
+    signatureMemoryBn: sanitizeText(result.signatureMemoryBn || freshArch.taglineBn),
+    selectedMemoryLabelsBn: (result.selectedMemoryLabelsBn || []).map(sanitizeText),
+  };
 }
 
 export function saveUserPreferences(prefs: Partial<UserPreferences>): void {
