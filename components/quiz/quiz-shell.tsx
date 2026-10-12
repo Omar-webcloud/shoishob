@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { QUIZ_QUESTIONS } from '@/lib/quiz-data';
 import {
@@ -30,22 +30,12 @@ const categoryLabelsBn: Record<string, string> = {
 
 export function QuizShell() {
   const router = useRouter();
-  const [currentStep, setCurrentStep] = useState<number>(0);
-  const [answers, setAnswers] = useState<QuizAnswers>({});
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [currentStep, setCurrentStep] = useState<number>(() => {
+    const saved = getCurrentQuizStep();
+    return saved >= 0 && saved < QUIZ_QUESTIONS.length ? saved : 0;
+  });
+  const [answers, setAnswers] = useState<QuizAnswers>(() => getQuizAnswers());
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-
-  // Load persisted progress on mount
-  useEffect(() => {
-    const savedAnswers = getQuizAnswers();
-    const savedStep = getCurrentQuizStep();
-
-    setAnswers(savedAnswers);
-    if (savedStep >= 0 && savedStep < QUIZ_QUESTIONS.length) {
-      setCurrentStep(savedStep);
-    }
-    setIsLoaded(true);
-  }, []);
 
   const totalQuestions = QUIZ_QUESTIONS.length;
   const currentQuestion = QUIZ_QUESTIONS[currentStep];
@@ -108,7 +98,7 @@ export function QuizShell() {
     }
   };
 
-  if (!isLoaded || !currentQuestion) {
+  if (!currentQuestion) {
     return (
       <div className="min-h-[50vh] flex flex-col items-center justify-center">
         <div className="w-8 h-8 border-3 border-[#2E6F40]/30 border-t-[#2E6F40] rounded-full animate-spin mb-3" />

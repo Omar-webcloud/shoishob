@@ -13,9 +13,9 @@ export function IdentityCard({ result, orientation = 'portrait' }: IdentityCardP
 
   return (
     <div
-      className={`relative w-full bg-white rounded-3xl border-2 border-[#2E6F40]/25 shadow-2xl overflow-hidden text-[#253D2C] ${
-        isLandscape ? 'aspect-[1.6/1] max-w-2xl' : 'aspect-[4/5] max-w-md'
-      } mx-auto flex flex-col justify-between p-6 sm:p-7 select-none`}
+      className={`relative w-full bg-white rounded-3xl border-2 border-[#2E6F40]/25 shadow-2xl text-[#253D2C] ${
+        isLandscape ? 'max-w-2xl p-6 sm:p-7' : 'max-w-md p-5 sm:p-6'
+      } mx-auto flex flex-col justify-between select-none`}
       style={{
         backgroundImage: 'radial-gradient(rgba(46, 111, 64, 0.05) 1.2px, transparent 0)',
         backgroundSize: '20px 20px',

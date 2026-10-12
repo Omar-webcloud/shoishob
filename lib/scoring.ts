@@ -1,6 +1,6 @@
 import { ArchetypeId, ChildhoodEra, DimensionScore, NostalgiaBadge } from '@/types/result';
 import { QuizAnswers } from '@/types/quiz';
-import { QUIZ_QUESTIONS, ARCHETYPES_DATA, ERAS_DATA, ALL_BADGES } from './quiz-data';
+import { QUIZ_QUESTIONS, ALL_BADGES } from './quiz-data';
 
 export interface CalculatedScores {
   archetypeId: ArchetypeId;
@@ -183,7 +183,7 @@ export function calculateChildhoodProfile(answers: QuizAnswers): CalculatedScore
   const nostalgiaScore = Math.min(99, Math.max(88, scoreBase + Math.min(totalAnswerCount - 8, 2)));
 
   // Generate signature memory statement
-  const signatureMemoryBn = generateSignatureMemory(topArchetype, topEra, answers);
+  const signatureMemoryBn = generateSignatureMemory(topArchetype);
 
   return {
     archetypeId: topArchetype,
@@ -196,11 +196,7 @@ export function calculateChildhoodProfile(answers: QuizAnswers): CalculatedScore
   };
 }
 
-function generateSignatureMemory(
-  archetype: ArchetypeId,
-  era: ChildhoodEra,
-  answers: QuizAnswers
-): string {
+function generateSignatureMemory(archetype: ArchetypeId): string {
   switch (archetype) {
     case 'street_legend':
       return 'বিকেলের বন্ধুদের ডাক, শেষ ওভারের নাটকীয় ছক্কা আর সূর্য ডুবে অন্ধকার না হওয়া পর্যন্ত বাড়ি না ফেরা—এই ছিল আমার শৈশব!';

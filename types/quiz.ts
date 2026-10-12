@@ -1,3 +1,5 @@
+import { ChildhoodEra } from './result';
+
 export type QuestionCategory =
   | 'snacks'
   | 'television'
@@ -22,7 +24,7 @@ export interface QuizOption {
     neighborhood_adventurer?: number;
     nostalgic_allrounder?: number;
   };
-  eraAffinity?: '90s' | 'early_2000s' | 'mid_2000s' | 'timeless';
+  eraAffinity?: ChildhoodEra;
   dimensionScores?: {
     games?: number;
     snacks?: number;

@@ -2,10 +2,12 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { clearAllShoishobData } from '@/lib/storage';
 import { ShieldCheck, Trash2, CheckCircle2 } from 'lucide-react';
 
 export function Footer() {
+  const router = useRouter();
   const [cleared, setCleared] = useState(false);
 
   const handleClearData = () => {
@@ -14,7 +16,7 @@ export function Footer() {
       setCleared(true);
       setTimeout(() => {
         setCleared(false);
-        window.location.href = '/';
+        router.push('/');
       }, 1200);
     }
   };
@@ -63,7 +65,7 @@ export function Footer() {
       </div>
 
       <div className="max-w-5xl mx-auto mt-8 pt-4 border-t border-[#2E6F40]/10 text-center text-xs text-[#253D2C]/60 flex flex-col sm:flex-row items-center justify-between gap-2">
-        <p>© {new Date().getFullYear()} শৈশব (Shoishob). Designed with ❤️ for Bangladeshi Nostalgia.</p>
+        <p>© ২০২৬ শৈশব (Shoishob). Designed with ❤️ for Bangladeshi Nostalgia.</p>
         <p className="flex items-center gap-2">
           <Link href="/" className="hover:underline">হোম</Link>
           <span>·</span>
