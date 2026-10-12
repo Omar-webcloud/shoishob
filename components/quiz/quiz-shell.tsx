@@ -90,7 +90,7 @@ export function QuizShell() {
 
   // Restart quiz
   const handleRestart = () => {
-    if (window.confirm('তুমি কি কুইজটি নতুন করে শুরু করতে চাও? আগের উত্তরগুলো মুছে যাবে।')) {
+    if (window.confirm('আপনি কি কুইজটি নতুন করে শুরু করতে চান? আগের উত্তরগুলো মুছে যাবে।')) {
       clearAllShoishobData();
       setAnswers({});
       setCurrentStep(0);

@@ -1,7 +1,6 @@
 import React from 'react';
 import { ChildhoodResult } from '@/types/result';
 import { Award, Sparkles } from 'lucide-react';
-import { PaperBoatIcon } from '@/components/common/nostalgia-motifs';
 
 interface ExportableCardProps {
   result: ChildhoodResult;
@@ -27,14 +26,19 @@ export const ExportableCard = React.forwardRef<HTMLDivElement, ExportableCardPro
           backgroundSize: '36px 36px',
         }}
       >
-        {/* Top Header */}
+        {/* Top Header with official Shoishob Logo */}
         <div className="flex items-center justify-between border-b-4 border-[#2E6F40]/20 pb-8">
           <div className="flex items-center gap-5">
-            <div className="w-16 h-16 rounded-2xl bg-[#2E6F40] flex items-center justify-center text-white shadow-md">
-              <PaperBoatIcon className="w-10 h-10" color="#FFFFFF" />
+            <div className="w-20 h-20 rounded-full overflow-hidden border-3 border-[#2E6F40] shadow-md shrink-0 bg-[#253D2C]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo-shoishob.png"
+                alt="শৈশব লোগো"
+                className="w-full h-full object-cover"
+              />
             </div>
             <div>
-              <span className="text-4xl font-extrabold tracking-tight block text-[#253D2C]">
+              <span className="text-4xl font-black tracking-tight block text-[#253D2C]">
                 আমার শৈশব · SHOISHOB
               </span>
               <span className="text-lg font-bold text-[#2E6F40] tracking-wider uppercase block mt-1">
@@ -43,7 +47,7 @@ export const ExportableCard = React.forwardRef<HTMLDivElement, ExportableCardPro
             </div>
           </div>
 
-          <div className="border-3 border-dashed border-[#2E6F40] px-6 py-2.5 rounded-full text-base font-bold text-[#2E6F40] bg-[#CFFFD6]/50">
+          <div className="border-3 border-dashed border-[#2E6F40] px-6 py-2.5 rounded-full text-base font-bold text-[#2E6F40] bg-[#CFFFD6]/50 shrink-0">
             খাঁটি নস্টালজিয়া · অফিসিয়াল স্মারক
           </div>
         </div>
@@ -100,7 +104,7 @@ export const ExportableCard = React.forwardRef<HTMLDivElement, ExportableCardPro
         <div>
           <div className="rounded-3xl bg-[#253D2C] text-white p-7 flex items-center justify-between shadow-lg">
             <div className="flex items-center gap-5">
-              <div className="w-16 h-16 rounded-2xl bg-[#2E6F40] flex items-center justify-center font-bold text-2xl border-2 border-[#68BA7F]">
+              <div className="w-16 h-16 rounded-2xl bg-[#2E6F40] flex items-center justify-center font-bold text-2xl border-2 border-[#68BA7F] shrink-0">
                 <Award className="w-9 h-9 text-[#CFFFD6]" />
               </div>
               <div>
@@ -113,7 +117,7 @@ export const ExportableCard = React.forwardRef<HTMLDivElement, ExportableCardPro
               </div>
             </div>
 
-            <div className="text-right">
+            <div className="text-right shrink-0">
               <span className="text-sm text-white/70 block uppercase font-medium">
                 স্মৃতি যুগ
               </span>

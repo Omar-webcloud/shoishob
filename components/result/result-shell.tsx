@@ -171,13 +171,13 @@ export function ResultShell({ initialResult }: ResultShellProps) {
   };
 
   const handleRetake = () => {
-    if (window.confirm('তুমি কি আবার কুইজ দিতে চাও?')) {
+    if (window.confirm('আপনি কি আবার কুইজ দিতে চান?')) {
       router.push('/quiz');
     }
   };
 
   const handleClearData = () => {
-    if (window.confirm('তুমি কি সমস্ত সংরক্ষিত শৈশব ডেটা মুছে ফেলতে চাও?')) {
+    if (window.confirm('আপনি কি সমস্ত সংরক্ষিত শৈশব ডেটা মুছে ফেলতে চান?')) {
       clearAllShoishobData();
       router.push('/');
     }
@@ -194,13 +194,13 @@ export function ResultShell({ initialResult }: ResultShellProps) {
           কোনো সংরক্ষিত শৈশব পাওয়া যায়নি!
         </h2>
         <p className="text-sm text-[#253D2C]/75 mb-6">
-          তুমি এখনো কুইজে অংশ নাওনি। মাত্র ২ মিনিট সময় দিয়ে নিজের শৈশব পরিচয় আবিষ্কার করো!
+          আপনি এখনো কুইজে অংশ নেননি। মাত্র ২ মিনিট সময় দিয়ে নিজের শৈশব পরিচয় আবিষ্কার করুন!
         </p>
         <Link
           href="/quiz"
           className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-[#2E6F40] text-white font-bold text-sm shadow-md hover:bg-[#253D2C] transition-all"
         >
-          কুইজ শুরু করুন
+          আমার শৈশব দেখি
         </Link>
       </div>
     );
@@ -212,10 +212,10 @@ export function ResultShell({ initialResult }: ResultShellProps) {
       <div className="text-center space-y-2">
         <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#CFFFD6] text-xs sm:text-sm font-bold text-[#253D2C] uppercase tracking-wider mb-1">
           <Sparkles className="w-4 h-4 text-[#2E6F40]" />
-          <span>তোমার শৈশব পরিচয়পত্র তৈরি হয়েছে!</span>
+          <span>আপনার শৈশব পরিচয়পত্র তৈরি হয়েছে!</span>
         </div>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#253D2C] tracking-tight">
-          তুমি ছিলে <span className="text-[#2E6F40]">&ldquo;{result.archetype.titleBn}&rdquo;</span>
+          আপনি ছিলেন <span className="text-[#2E6F40]">&ldquo;{result.archetype.titleBn}&rdquo;</span>
         </h1>
         <p className="text-sm sm:text-base text-[#253D2C]/80 max-w-xl mx-auto">
           {result.archetype.taglineBn}

@@ -56,7 +56,7 @@ export function ShareActions({ result, onOpenStoryGuide }: ShareActionsProps) {
       </div>
 
       <p className="text-xs sm:text-sm text-[#253D2C]/80 leading-relaxed">
-        তোমার শৈশব পরিচয় দেখে তোমার বন্ধুদেরও শৈশব আর্কিটাইপ জানতে চাও? সরাসরি লিংক শেয়ার করে তাদের চ্যালেঞ্জ করো!
+        আপনার শৈশব পরিচয় দেখে বন্ধুদেরও শৈশব আর্কিটাইপ জানতে চান? সরাসরি লিংক শেয়ার করে তাদের চ্যালেঞ্জ করুন!
       </p>
 
       {/* Share Buttons Grid */}
@@ -115,7 +115,7 @@ export function ShareActions({ result, onOpenStoryGuide }: ShareActionsProps) {
         <div className="flex items-center gap-2.5">
           <Sparkles className="w-5 h-5 text-[#2E6F40] shrink-0" />
           <span className="text-xs sm:text-sm font-semibold text-[#253D2C]">
-            “তোমার শৈশব কোন যুগের ছিল?” — বন্ধুদের জিজ্ঞাসা করো!
+            “আপনার শৈশব কোন যুগের ছিল?” — বন্ধুদের জিজ্ঞাসা করুন!
           </span>
         </div>
         <button

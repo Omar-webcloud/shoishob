@@ -5,8 +5,8 @@ import { Footer } from '@/components/common/footer';
 import { QuizShell } from '@/components/quiz/quiz-shell';
 
 export const metadata: Metadata = {
-  title: 'শৈশব কুইজ · তোমার ছোটবেলার গল্পটা কেমন ছিল?',
-  description: '১০-১২টি সহজ স্মৃতিভিত্তিক প্রশ্নের উত্তর দিয়ে জেনে নাও তোমার শৈশবের রূপকথা ও ব্যক্তিগত পরিচয়।',
+  title: 'শৈশব কুইজ · আপনার ছোটবেলার গল্পটা কেমন ছিল?',
+  description: '১০-১২টি সহজ স্মৃতিভিত্তিক প্রশ্নের উত্তর দিয়ে জেনে নিন আপনার শৈশবের রূপকথা ও ব্যক্তিগত পরিচয়।',
 };
 
 export default function QuizPage() {

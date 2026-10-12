@@ -55,7 +55,7 @@ export function QuizNavigation({
           </>
         ) : isLastQuestion ? (
           <>
-            <span>আমার শৈশব দেখুন</span>
+            <span>আমার শৈশব দেখি</span>
             <Sparkles className="w-4 h-4 text-[#CFFFD6]" />
           </>
         ) : (

@@ -30,14 +30,14 @@ function ShareContent() {
           শেয়ার লিংকটি অকার্যকর বা পরিবর্তিত
         </h2>
         <p className="text-sm text-[#253D2C]/75 leading-relaxed">
-          শেয়ার করা লিংকের ডেটা সঠিক নয় অথবা লিঙ্কটি অসম্পূর্ণ। চিন্তার কোনো কারণ নেই, তুমি নিজেই এখনই ২ মিনিটে তোমার শৈশব কার্ড তৈরি করে নিতে পারো!
+          শেয়ার করা লিংকের ডেটা সঠিক নয় অথবা লিঙ্কটি অসম্পূর্ণ। চিন্তার কোনো কারণ নেই, আপনি নিজেই এখনই ২ মিনিটে আপনার শৈশব কার্ড তৈরি করে নিতে পারেন!
         </p>
         <div className="pt-2">
           <Link
             href="/quiz"
             className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-[#2E6F40] text-white font-bold text-sm shadow-md hover:bg-[#253D2C] transition-all"
           >
-            <span>আমার শৈশব আবিষ্কার করি</span>
+            <span>আমার শৈশব দেখি</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -69,20 +69,20 @@ function ShareContent() {
       {/* Challenge Call to Action Banner */}
       <div className="tactile-card p-6 sm:p-8 bg-gradient-to-br from-[#F0FAF3] to-[#E7FCEB] border-2 border-[#2E6F40]/30 text-center space-y-4">
         <span className="text-xs font-bold text-[#2E6F40] uppercase tracking-wider block">
-          তোমার পালা · YOUR TURN
+          আপনার পালা · YOUR TURN
         </span>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-[#253D2C]">
-          তোমার শৈশবটা কোন যুগের ছিল?
+          আপনার শৈশবটা কোন যুগের ছিল?
         </h2>
         <p className="text-sm text-[#253D2C]/80 max-w-md mx-auto">
-          বিকেলের গলির ক্রিকেট, স্কুলের টিফিনের পরোটা নাকি টিভির কার্টুন? ১০টি সহজ প্রশ্নে জেনে নাও তোমার নিজস্ব স্মৃতি পরিচয়!
+          বিকেলের গলির ক্রিকেট, স্কুলের টিফিনের পরোটা নাকি টিভির কার্টুন? ১০টি সহজ প্রশ্নে জেনে নিন আপনার নিজস্ব স্মৃতি পরিচয়!
         </p>
         <div>
           <Link
             href="/quiz"
             className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-[#2E6F40] hover:bg-[#253D2C] text-white font-bold text-base shadow-lg hover:shadow-xl transition-all"
           >
-            <span>আমিও আমার শৈশব দেখব</span>
+            <span>আমার শৈশব দেখি</span>
             <ArrowRight className="w-5 h-5" />
           </Link>
         </div>

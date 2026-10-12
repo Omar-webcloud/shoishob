@@ -22,20 +22,19 @@ export function DownloadControls({
   isExporting,
   canWebShare,
   isInApp,
-  inAppPlatform,
   orientation,
   onChangeOrientation,
   statusMessage,
 }: DownloadControlsProps) {
   return (
     <div className="w-full space-y-4">
-      {/* In-app Browser Notice */}
+      {/* Friendly in-app browser notice without developer jargons */}
       {isInApp && (
         <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs sm:text-sm flex items-start gap-2.5">
           <AlertCircle className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
           <div>
-            <span className="font-bold">ইন-অ্যাপ ব্রাউজার শনাক্ত হয়েছে ({inAppPlatform || 'WebView'}):</span>{' '}
-            সরাসরি ডাউনলোড ব্লক হলে &ldquo;ছবি সেভ করুন&rdquo; স্ক্রিন থেকে চেপে ধরে সেভ করুন অথবা থ্রি-ডট মেনু থেকে <strong>Chrome</strong> বা <strong>Safari</strong> ব্রাউজারে খুলুন।
+            <span className="font-bold">বিশেষ পরামর্শ:</span>{' '}
+            ফেসবুক বা ইনস্টাগ্রাম ব্রাউজারে সরাসরি ডাউনলোড আটকে গেলে নিচের <strong>&ldquo;ছবি সংরক্ষণ করুন&rdquo;</strong> অপশন থেকে ছবিতে চেপে ধরে সহজে সেভ করে নিন।
           </div>
         </div>
       )}
@@ -100,7 +99,7 @@ export function DownloadControls({
         </button>
       </div>
 
-      {/* Mobile Web Share Button if supported */}
+      {/* Direct Phone Share Button without jargon */}
       {canWebShare && (
         <button
           type="button"
@@ -109,7 +108,7 @@ export function DownloadControls({
           className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-[#CFFFD6] text-[#253D2C] hover:bg-[#A9D5B4] font-bold text-sm border border-[#2E6F40]/20 shadow-xs transition-all cursor-pointer"
         >
           <Share2 className="w-4 h-4 text-[#2E6F40]" />
-          <span>ডিভাইসের নেটিভ শেয়ার মেনুতে পাঠান</span>
+          <span>সরাসরি ফোনে শেয়ার করুন</span>
         </button>
       )}
 

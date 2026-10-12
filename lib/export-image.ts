@@ -137,7 +137,7 @@ export async function triggerNativeFileShare(
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       await navigator.share({
         title,
-        text: 'আমার শৈশবের পরিচয়পত্র! তোমার শৈশব কেমন ছিল?',
+        text: 'আমার শৈশবের পরিচয়পত্র! আপনার শৈশব কেমন ছিল?',
         files: [file],
       });
       return true;

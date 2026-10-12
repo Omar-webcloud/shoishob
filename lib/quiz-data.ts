@@ -9,7 +9,7 @@ export const ARCHETYPES_DATA: Record<string, ArchetypeMeta> = {
     taglineBn: 'বিকেলের খেলা, বন্ধুর ডাক আর সূর্যাস্ত না হওয়া পর্যন্ত মাঠ না ছাড়া!',
     taglineEn: 'Sunset was just the beginning of extra innings.',
     descriptionBn:
-      'তোমার শৈশব মানেই রক্তে খেলাধুলার নেশা! বিকেলে বন্ধুদের "ওই খেলবি না?" ডাক, গলির ক্রিকেটে শেষ বলের ছক্কা, মার্বেল-লাটিমের নিখুঁত নিশানা আর বৃষ্টি নামলে মাঠে কাদামাখা ফুটবল। সন্ধ্যা নেমে আজান পড়ার আগ পর্যন্ত তোমাকে বাড়ি ফেরানো কারো পক্ষে সম্ভব ছিল না।',
+      'আপনার শৈশব মানেই রক্তে খেলাধুলার নেশা! বিকেলে বন্ধুদের "ওই খেলবি না?" ডাক, গলির ক্রিকেটে শেষ বলের ছক্কা, মার্বেল-লাটিমের নিখুঁত নিশানা আর বৃষ্টি নামলে মাঠে কাদামাখা ফুটবল। সন্ধ্যা নেমে আজান পড়ার আগ পর্যন্ত আপনাকে বাড়ি ফেরানো কারো পক্ষে সম্ভব ছিল না।',
     avatarIcon: '🏏',
     accentColor: '#2E6F40',
     signatureTraitsBn: [
@@ -25,7 +25,7 @@ export const ARCHETYPES_DATA: Record<string, ArchetypeMeta> = {
     taglineBn: 'প্রিয় কার্টুনের সময়সূচি মুখস্থ ছিল, অ্যান্টেনা ঘুরিয়েও টিভি দেখার নেশা!',
     taglineEn: 'Never missed Friday morning specials or afternoon cartoons.',
     descriptionBn:
-      'তোমার শৈশবে টিভির রুমটাই ছিল পুরো পৃথিবী! শুক্রবার সকালে আলিফ লায়লা বা মীনা কার্টুনের জন্য আগেভাগে উঠে বসে থাকা, বিকেলে কার্টুন নেটওয়ার্কের টম অ্যান্ড জেরি কিংবা ডোরেমনের জন্য রিমোট নিয়ে কাড়াকাড়ি। টিভির অ্যান্টেনা নড়ে গেলে ছাদে গিয়ে "এখন আসছে?" চিৎকার করার অভিজ্ঞতা তোমার স্মৃতিতে আজও জীবন্ত।',
+      'আপনার শৈশবে টিভির রুমটাই ছিল পুরো পৃথিবী! শুক্রবার সকালে আলিফ লায়লা বা মীনা কার্টুনের জন্য আগেভাগে উঠে বসে থাকা, বিকেলে কার্টুন নেটওয়ার্কের টম অ্যান্ড জেরি কিংবা ডোরেমনের জন্য রিমোট নিয়ে কাড়াকাড়ি। টিভির অ্যান্টেনা নড়ে গেলে ছাদে গিয়ে "এখন আসছে?" চিৎকার করার অভিজ্ঞতা আপনার স্মৃতিতে আজও জীবন্ত।',
     avatarIcon: '📺',
     accentColor: '#1E5E38',
     signatureTraitsBn: [
@@ -41,7 +41,7 @@ export const ARCHETYPES_DATA: Record<string, ArchetypeMeta> = {
     taglineBn: 'টিফিনের ঘণ্টা পড়া মানেই উৎসব, বন্ধুদের সাথে ভাগাভাগির খাঁটি বন্ধুত্ব!',
     taglineEn: 'School was strictly an excuse for tiffin break snacks.',
     descriptionBn:
-      'স্কুলে পড়াশোনা যাই হোক, টিফিনের বিরতিটাই ছিল তোমার দিনের সেরা মুহূর্ত! লাল বা গোল অ্যালুমিনিয়াম টিফিন বক্সের পরোটা-ভাজি, স্কুলের গেটের সামনের ঝালমুড়ি আর ৫ টাকার কাঁচা আমের আচার। নিজের টিফিন নিজে পুরোটা খাওয়ার চেয়ে বন্ধুদের সাথে কাড়াকাড়ি করে খাওয়াই ছিল তোমার সবচেয়ে বড় আনন্দ।',
+      'স্কুলে পড়াশোনা যাই হোক, টিফিনের বিরতিটাই ছিল আপনার দিনের সেরা মুহূর্ত! লাল বা গোল অ্যালুমিনিয়াম টিফিন বক্সের পরোটা-ভাজি, স্কুলের গেটের সামনের ঝালমুড়ি আর ৫ টাকার কাঁচা আমের আচার। নিজের টিফিন নিজে পুরোটা খাওয়ার চেয়ে বন্ধুদের সাথে কাড়াকাড়ি করে খাওয়াই ছিল আপনার সবচেয়ে বড় আনন্দ।',
     avatarIcon: '🍱',
     accentColor: '#367B48',
     signatureTraitsBn: [
@@ -57,7 +57,7 @@ export const ARCHETYPES_DATA: Record<string, ArchetypeMeta> = {
     taglineBn: 'পেনসিলে ক্যাসেট ঘোরানো থেকে সাইবার ক্যাফের নতুন বিস্ময়!',
     taglineEn: 'Bridging the glorious gap between cassette tapes and dial-up internet.',
     descriptionBn:
-      'অ্যানালগ শৈশব থেকে ডিজিটাল যুগের রূপান্তরের তুমি ছিলে একদম সামনের সারির যাত্রী! ক্যাসেটের রিবন জড়িয়ে গেলে নটরাজ পেনসিল দিয়ে ঘোরানো, সিডি প্লেয়ারের স্ক্র্যাচ মুছা, সাইবার ক্যাফেতে গিয়ে Road Rash বা GTA ভাইস সিটি খেলা এবং নকিয়া ফোনের স্নেক গেমে সর্বোচ্চ স্কোর করার রোমাঞ্চ তোমার মতো আর কেউ জানে না।',
+      'অ্যানালগ শৈশব থেকে ডিজিটাল যুগের রূপান্তরের আপনি ছিলেন একদম সামনের সারির যাত্রী! ক্যাসেটের রিবন জড়িয়ে গেলে নটরাজ পেনসিল দিয়ে ঘোরানো, সিডি প্লেয়ারের স্ক্র্যাচ মুছা, সাইবার ক্যাফেতে গিয়ে Road Rash বা GTA ভাইস সিটি খেলা এবং নকিয়া ফোনের স্নেক গেমে সর্বোচ্চ স্কোর করার রোমাঞ্চ আপনার মতো আর কেউ জানে না।',
     avatarIcon: '📼',
     accentColor: '#28583B',
     signatureTraitsBn: [
@@ -73,7 +73,7 @@ export const ARCHETYPES_DATA: Record<string, ArchetypeMeta> = {
     taglineBn: 'লোডশেডিংয়ে ছাদে আড্ডা, ভূত-ভূতের গল্প আর অবিরাম রোমাঞ্চ!',
     taglineEn: 'Every rooftop, alleyway, and rainstorm held a new mystery.',
     descriptionBn:
-      'পাড়ার প্রতিটা গলি, প্রতিটা ছাদ আর প্রতিটা গাছ ছিল তোমার রোমাঞ্চের আঙিনা! হঠাৎ লোডশেডিং হলে মন খারাপ না করে ছাদে উঠে দলবেঁধে আড্ডা আর ভূতের গল্প বলা, বৃষ্টিতে ভিজে কাঁচা আম কুড়ানো আর ঈদের দিনে দলবেঁধে পুরো পাড়া চষে বেড়ানো। তোমার শৈশব ছিল মুক্ত বাতাসের আর খাঁটি মানুষের সংস্পর্শে ঘেরা।',
+      'পাড়ার প্রতিটা গলি, প্রতিটা ছাদ আর প্রতিটা গাছ ছিল আপনার রোমাঞ্চের আঙিনা! হঠাৎ লোডশেডিং হলে মন খারাপ না করে ছাদে উঠে দলবেঁধে আড্ডা আর ভূতের গল্প বলা, বৃষ্টিতে ভিজে কাঁচা আম কুড়ানো আর ঈদের দিনে দলবেঁধে পুরো পাড়া চষে বেড়ানো। আপনার শৈশব ছিল মুক্ত বাতাসের আর খাঁটি মানুষের সংস্পর্শে ঘেরা।',
     avatarIcon: '🪁',
     accentColor: '#254E34',
     signatureTraitsBn: [
@@ -89,7 +89,7 @@ export const ARCHETYPES_DATA: Record<string, ArchetypeMeta> = {
     taglineBn: 'মাঠের খেলা, টিভির কার্টুন আর বন্ধুদের আড্ডা—সব রঙের এক অপূর্ব শৈশব!',
     taglineEn: 'A master of every Bangladeshi childhood chapter and craft.',
     descriptionBn:
-      'তোমার শৈশবে কোনো কিছুরই কমতি ছিল না! বিকেলে মাঠের খেলাধুলা থেকে শুরু করে ঘরে ফিরে টিভির প্রিয় অনুষ্ঠান, স্কুলের টিফিনের আড্ডা থেকে রাতের লোডশেডিংয়ের গান—তুমি প্রতিটা মুহূর্তের আনন্দ চেখে দেখেছ। তোমার স্মৃতিভাণ্ডার যেকোনো বাংলাদেশির জন্য পরম ঈর্ষার বিষয়।',
+      'আপনার শৈশবে কোনো কিছুরই কমতি ছিল না! বিকেলে মাঠের খেলাধুলা থেকে শুরু করে ঘরে ফিরে টিভির প্রিয় অনুষ্ঠান, স্কুলের টিফিনের আড্ডা থেকে রাতের লোডশেডিংয়ের গান—আপনি প্রতিটা মুহূর্তের আনন্দ চেখে দেখেছেন। আপনার স্মৃতিভাণ্ডার যেকোনো বাংলাদেশির জন্য পরম ঈর্ষার বিষয়।',
     avatarIcon: '✨',
     accentColor: '#2E6F40',
     signatureTraitsBn: [
@@ -108,7 +108,7 @@ export const ERAS_DATA: Record<string, EraMeta> = {
     subtitleBn: 'অ্যানালগ শৈশব, বিটিভি ও খোলা মাঠের অপার স্বাধীনতা',
     approxYears: '১৯৯০ - ১৯৯৯',
     descriptionBn:
-      'তোমার স্মৃতিগুলো মূলত নব্বইয়ের দশকের খাঁটি গ্রামীণ ও মফস্বলীয় আনন্দ, বিটিভির একচ্ছত্র ভালোবাসা আর প্রযুক্তিবিহীন নির্মল খেলাধুলার সাথে সবচেয়ে বেশি মেলে।',
+      'আপনার স্মৃতিগুলো মূলত নব্বইয়ের দশকের খাঁটি গ্রামীণ ও মফস্বলীয় আনন্দ, বিটিভির একচ্ছত্র ভালোবাসা আর প্রযুক্তিবিহীন নির্মল খেলাধুলার সাথে সবচেয়ে বেশি মেলে।',
   },
   '2000s_millennium': {
     id: '2000s_millennium',
@@ -117,7 +117,7 @@ export const ERAS_DATA: Record<string, EraMeta> = {
     subtitleBn: 'স্যাটেলাইট টিভি, ক্যাসেট-সিডি আর বদলাতে থাকা সময়',
     approxYears: '২০০০ - ২০০৬',
     descriptionBn:
-      'তোমার স্মৃতিগুলো মিলেনিয়ামের সন্ধিক্ষণের সাথে মিলে যায়—যেখানে একদিকে ছিল বিকেলের মাঠের ধুলোবালি, অন্যদিকে যোগ হয়েছিল কার্টুন নেটওয়ার্ক, সিডি প্লেয়ার আর সাইবার ক্যাফে।',
+      'আপনার স্মৃতিগুলো মিলেনিয়ামের সন্ধিক্ষণের সাথে মিলে যায়—যেখানে একদিকে ছিল বিকেলের মাঠের ধুলোবালি, অন্যদিকে যোগ হয়েছিল কার্টুন নেটওয়ার্ক, সিডি প্লেয়ার আর সাইবার ক্যাফে।',
   },
   'mid_2000s_dawn': {
     id: 'mid_2000s_dawn',
@@ -126,7 +126,7 @@ export const ERAS_DATA: Record<string, EraMeta> = {
     subtitleBn: 'ফিচার ফোন, ডোরেমন আর প্রযুক্তির প্রথম আলো',
     approxYears: '২০০৬ - ২০১০+',
     descriptionBn:
-      'তোমার শৈশব ছিল প্রযুক্তির রঙিন দুনিয়ার সূচনাপর্বে—স্মার্টফোন আসার আগের সেই সোনালী সময়, যেখানে ডোরেমন, কম্পিউটার গেম আর বন্ধুদের সরাসরি আড্ডার দারুণ ভারসাম্য ছিল।',
+      'আপনার শৈশব ছিল প্রযুক্তির রঙিন দুনিয়ার সূচনাপর্বে—স্মার্টফোন আসার আগের সেই সোনালী সময়, যেখানে ডোরেমন, কম্পিউটার গেম আর বন্ধুদের সরাসরি আড্ডার দারুণ ভারসাম্য ছিল।',
   },
   'timeless_bangla': {
     id: 'timeless_bangla',
@@ -135,7 +135,7 @@ export const ERAS_DATA: Record<string, EraMeta> = {
     subtitleBn: 'কালজয়ী স্মৃতি, বৃষ্টি, টিফিন আর মাটির টান',
     approxYears: 'যেকোনো সময়',
     descriptionBn:
-      'তোমার স্মৃতির কোনো নির্দিষ্ট সাল-তারিখ লাগে না; বাংলার চিরসবুজ শৈশবের মতো বৃষ্টিভেজা দিন, বন্ধুদের সাথে টিফিন ভাগাভাগি আর বিকেলের নির্মল আনন্দ চিরকাল একই রকম সুন্দর।',
+      'আপনার স্মৃতির কোনো নির্দিষ্ট সাল-তারিখ লাগে না; বাংলার চিরসবুজ শৈশবের মতো বৃষ্টিভেজা দিন, বন্ধুদের সাথে টিফিন ভাগাভাগি আর বিকেলের নির্মল আনন্দ চিরকাল একই রকম সুন্দর।',
   },
 };
 
@@ -207,9 +207,9 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: 'q1_after_school',
     order: 1,
     category: 'school_life',
-    questionBn: 'স্কুল থেকে ফিরে তোমার প্রথম কাজ কী ছিল?',
+    questionBn: 'স্কুল থেকে ফিরে আপনার প্রথম কাজ কী ছিল?',
     questionEn: 'What was the first thing you did after getting back from school?',
-    hintBn: 'ব্যাগ ছুড়ে ফেলে দিয়ে সবচেয়ে আগে যা করতে...',
+    hintBn: 'ব্যাগ ফেলে দিয়ে সবচেয়ে আগে যা করতেন...',
     options: [
       {
         id: 'tv_cartoon',
@@ -261,7 +261,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: 'q2_school_tiffin',
     order: 2,
     category: 'snacks',
-    questionBn: 'স্কুলের টিফিনে তোমার সবচেয়ে প্রিয় স্বাদ কোনটি ছিল?',
+    questionBn: 'স্কুলের টিফিনে আপনার সবচেয়ে প্রিয় স্বাদ কোনটি ছিল?',
     questionEn: 'What was your favorite school tiffin memory or snack?',
     hintBn: 'যে খাবারের গন্ধেই ক্লাসে মন বসত না...',
     options: [
@@ -279,7 +279,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       {
         id: 'kulfi_icecream',
         labelBn: 'আইসক্রিমের ঘণ্টা ও কাঠি আইসক্রিম',
-        labelEn: 'Ice cream bell ringing & 2/5 taka stick ice creams',
+        labelEn: 'Ice cream bell ringing & stick ice creams',
         subtitleBn: 'লাল-সবুজ বরফের গোলা বা দুধ কুলফি',
         icon: '🍦',
         archetypeWeights: { tiffin_time: 2, neighborhood_adventurer: 2 },
@@ -313,7 +313,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: 'q3_tv_cartoons',
     order: 3,
     category: 'television',
-    questionBn: 'কোন অনুষ্ঠানটি দেখার জন্য তুমি আগেভাগে টিভির সামনে বসে থাকতে?',
+    questionBn: 'কোন অনুষ্ঠানটি দেখার জন্য আপনি আগেভাগে টিভির সামনে বসে থাকতেন?',
     questionEn: 'Which TV show or cartoon had you glued to the screen in advance?',
     hintBn: 'অন্য কেউ রিমোট ধরতে গেলে যুদ্ধ বেঁধে যেত...',
     options: [
@@ -364,7 +364,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: 'q4_afternoon_games',
     order: 4,
     category: 'games',
-    questionBn: 'বিকেলের কোন খেলাটিতে তুমি ছিলে সেরা খেলোয়াড়?',
+    questionBn: 'বিকেলের কোন খেলাটিতে আপনি ছিলেন সেরা খেলোয়াড়?',
     questionEn: 'Which afternoon game were you the undisputed champion at?',
     hintBn: 'যে খেলায় জিতলে সারা দিন মন ভালো থাকত...',
     options: [
@@ -435,7 +435,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         id: 'tv_antenna_fix',
         labelBn: 'টিভির ঝিরঝির দূর করতে ছাদে গিয়ে অ্যান্টেনা ঘোরানো',
         labelEn: 'Shouting from rooftop: "Did the TV picture get clearer?!"',
-        subtitleBn: '"এখন আসছে? একটু বাঁয়ে ঘোরা!"',
+        subtitleBn: '"এখন আসছে? একটু বাঁয়ে ঘোরান!"',
         icon: '📡',
         archetypeWeights: { cartoon_era: 3, neighborhood_adventurer: 3 },
         eraAffinity: '90s_golden',
@@ -468,7 +468,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: 'q6_school_life',
     order: 6,
     category: 'school_life',
-    questionBn: 'স্কুলজীবনের কোন দৃশ্যটি তোমার স্মৃতিতে সবচেয়ে তাজা?',
+    questionBn: 'স্কুলজীবনের কোন দৃশ্যটি আপনার স্মৃতিতে সবচেয়ে তাজা?',
     questionEn: 'Which iconic school memory is etched most deeply in your mind?',
     hintBn: 'স্কুলের সেই ঘ্রাণ আর অনুভূতি...',
     options: [
@@ -476,7 +476,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         id: 'new_books_smell',
         labelBn: 'বছরের প্রথম দিন নতুন বইয়ের ঘ্রাণ ও ক্যালেন্ডারের মলাট',
         labelEn: 'Scent of brand-new school textbooks & calendar paper covers',
-        subtitleBn: 'পুরোনো ক্যালেন্ডারের পাতা উল্টে নিখুঁত মলাট লাগানো',
+        subtitleBn: 'পুরোনো ক্যালেন্ডারের পাতা উল্টে নিখুঁট মলাট লাগানো',
         icon: '📚',
         archetypeWeights: { nostalgic_allrounder: 4, tiffin_time: 1 },
         eraAffinity: 'timeless_bangla',
@@ -498,7 +498,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         id: 'tiffin_bell_dash',
         labelBn: 'টিফিনের ঢং ঢং ঘণ্টা বাজার সাথে সাথে ক্লাস থেকে ছুট',
         labelEn: 'The resounding tiffin bell and instant mad rush outside',
-        subtitleBn: 'টিচারের কথা শেষ হওয়ার আগেই ব্যাগ খোলা',
+        subtitleBn: 'শিক্ষকের কথা শেষ হওয়ার আগেই ব্যাগ খোলা',
         icon: '🔔',
         archetypeWeights: { tiffin_time: 5 },
         eraAffinity: 'timeless_bangla',
@@ -520,7 +520,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: 'q7_load_shedding',
     order: 7,
     category: 'cultural',
-    questionBn: 'হঠাৎ লোডশেডিং হলে তোমার বাড়িতে বা পাড়ায় কী ঘটত?',
+    questionBn: 'হঠাৎ লোডশেডিং হলে আপনার বাড়িতে বা পাড়ায় কী ঘটত?',
     questionEn: 'What would happen in your home or neighborhood during sudden power outages?',
     hintBn: 'পুরো এলাকা অন্ধকার হয়ে যাওয়া সেই মুহূর্ত...',
     options: [
@@ -571,14 +571,14 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: 'q8_collectible_hobby',
     order: 8,
     category: 'toys_hobbies',
-    questionBn: 'ছোটবেলায় কোন জিনিসটি যত্ন করে জমানোর অদ্ভুত বাতিক ছিল?',
+    questionBn: 'ছোটবেলায় কোন জিনিসটি যত্ন করে জমানোর অদ্ভুত বাতিক ছিল আপনার?',
     questionEn: 'Which quirky collection or childhood treasure did you hoard with pride?',
     hintBn: 'ছোটবেলার সবচেয়ে মূল্যবান সম্পত্তি...',
     options: [
       {
         id: 'sparkling_marbles',
         labelBn: 'রঙিন মার্বেল ও কাঁচের গুলি',
-        labelEn: 'Glittering colored glass marbles in Horlicks jars',
+        labelEn: 'Glittering colored glass marbles in jars',
         subtitleBn: 'হরলিক্সের বৈয়ামে সাজিয়ে রাখা কাঁচের সম্পদ',
         icon: '🔮',
         archetypeWeights: { street_legend: 4, neighborhood_adventurer: 2 },
@@ -589,7 +589,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       {
         id: 'chewingum_stickers',
         labelBn: 'চুইংগামের ভেতরের স্টিকার বা পোকেমন/ডব্লিউডব্লিউই তাস',
-        labelEn: 'Bubblegum tattoo stickers, Pokémon cards & WWE trump cards',
+        labelEn: 'Bubblegum tattoo stickers, Pokémon cards & WWE cards',
         subtitleBn: 'হাতে বা জ্যামিতি বক্সে ট্যাটু ঘষে লাগানো',
         icon: '🃏',
         archetypeWeights: { cartoon_era: 3, early_tech: 2 },
@@ -599,7 +599,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       {
         id: 'bottle_caps_matchboxes',
         labelBn: 'পেপসি-কোকের ধাতব ক্যাপ বা দেশলাইয়ের সুন্দর বাক্স',
-        labelEn: 'Pepsi crown caps, flattened metal bottle tops & matchbox covers',
+        labelEn: 'Crown caps, flattened bottle tops & matchbox covers',
         subtitleBn: 'পাথর দিয়ে পিটিয়ে গোল মুদ্রা বানিয়ে খেলা',
         icon: '🪙',
         archetypeWeights: { neighborhood_adventurer: 3, street_legend: 2 },
@@ -609,7 +609,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       {
         id: 'stamps_feathers',
         labelBn: 'চিঠির ডাকটিকিট, ময়ূরের পালক ও খাতার কোণে শুকানো ফুল',
-        labelEn: 'Postage stamps, peacock feathers & dried flower petals in books',
+        labelEn: 'Postage stamps, peacock feathers & dried flower petals',
         subtitleBn: 'বিশ্বাস ছিল ময়ূরের পালকে খাতা রাখলে বাচ্চা দেবে!',
         icon: '🪶',
         archetypeWeights: { nostalgic_allrounder: 4, tiffin_time: 1 },
@@ -622,14 +622,14 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: 'q9_eid_festivals',
     order: 9,
     category: 'cultural',
-    questionBn: 'ঈদের দিনের সবচেয়ে রোমাঞ্চকর স্মৃতি কোনটি?',
+    questionBn: 'ঈদের দিনের সবচেয়ে রোমাঞ্চকর স্মৃতি কোনটি ছিল আপনার?',
     questionEn: 'What was your most thrilling memory of Eid morning & day?',
     hintBn: 'সারা বছরের সবচেয়ে প্রতীক্ষিত উৎসব...',
     options: [
       {
         id: 'salami_counting',
         labelBn: 'বড়দের সালাম করে সালামির নতুন নোট গুনে লুকানো',
-        labelEn: 'Touch-feet salam to elders and meticulously counting crisp notes',
+        labelEn: 'Salam to elders and meticulously counting crisp notes',
         subtitleBn: 'কার কত হলো তা নিয়ে বন্ধুদের সাথে টক্কর!',
         icon: '💵',
         archetypeWeights: { tiffin_time: 3, nostalgic_allrounder: 3 },
@@ -640,7 +640,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       {
         id: 'firecrackers_fun',
         labelBn: 'সন্ধ্যার পর পটকা ফোটানো ও তারাবাতির রোমাঞ্চ',
-        labelEn: 'Evening firecrackers, sparklers (tarabati) and cherry bombs',
+        labelEn: 'Evening firecrackers and sparklers (tarabati)',
         subtitleBn: 'অন্ধকার গলিতে আলো আর শব্দের উৎসব',
         icon: '✨',
         archetypeWeights: { neighborhood_adventurer: 4, street_legend: 2 },
@@ -673,7 +673,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: 'q10_rainy_day_football',
     order: 10,
     category: 'games',
-    questionBn: 'ঝুম বৃষ্টি নামলে তোমার সবচেয়ে প্রিয় কাণ্ড কী ছিল?',
+    questionBn: 'ঝুম বৃষ্টি নামলে আপনার সবচেয়ে প্রিয় কাণ্ড কী ছিল?',
     questionEn: 'When sudden heavy monsoon rains poured, what did you do?',
     hintBn: 'বৃষ্টি নামলেই যার ঘরে মন টিকত না...',
     options: [
@@ -711,7 +711,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       {
         id: 'mango_collecting',
         labelBn: 'ঝড়ে আম কুড়াতে দৌড়ানো আর ছাদের কার্নিশে হাত পেতে বসা',
-        labelEn: 'Scrambling during heavy storm winds to collect fallen green mangoes',
+        labelEn: 'Scrambling during heavy storm winds to collect fallen mangoes',
         subtitleBn: 'কাঁচা আম কুড়িয়ে লবণ-মরিচ দিয়ে খাওয়া',
         icon: '🥭',
         archetypeWeights: { neighborhood_adventurer: 4, street_legend: 2 },
@@ -725,9 +725,9 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     order: 11,
     category: 'technology',
     isOptional: false,
-    questionBn: 'কোন পরিবেশ বা স্মৃতির সাথে তুমি নিজেকে সবচেয়ে বেশি মেলাতে পারো?',
+    questionBn: 'কোন পরিবেশ বা স্মৃতির সাথে আপনি নিজেকে সবচেয়ে বেশি মেলাতে পারেন?',
     questionEn: 'Which memory landscape resonates closest to your personal upbringing?',
-    hintBn: 'তোমার শৈশবের মূল আবহ...',
+    hintBn: 'আপনার শৈশবের মূল আবহ...',
     options: [
       {
         id: 'golden_pure_analogue',
@@ -742,7 +742,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       {
         id: 'satellite_cassette_dawn',
         labelBn: 'ক্যাসেট-সিডি ও স্যাটেলাইট টিভির রঙিন প্রবেশকাল',
-        labelEn: 'The advent of cable TV, CD players, and transitioning pop culture',
+        labelEn: 'Cable TV, CD players, and transitioning pop culture',
         subtitleBn: '২০০০ সালের মিলেনিয়াম ও ক্যাসেট-সিডির স্বর্ণযুগ',
         icon: '📼',
         archetypeWeights: { cartoon_era: 3, early_tech: 3 },
@@ -776,9 +776,9 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     order: 12,
     category: 'habits',
     isOptional: false,
-    questionBn: 'ছোটবেলার কোন অনুভূতিটি তুমি আজ এক নিমিষে আবার ফিরে পেতে চাইবে?',
+    questionBn: 'ছোটবেলার কোন অনুভূতিটি আপনি আজ এক নিমিষে আবার ফিরে পেতে চাইবেন?',
     questionEn: 'Which childhood feeling would you give anything to relive right now?',
-    hintBn: 'তোমার হৃদয়ের সবচেয়ে নরম স্মৃতি...',
+    hintBn: 'আপনার হৃদয়ের সবচেয়ে নরম স্মৃতি...',
     options: [
       {
         id: 'carefree_afternoons',

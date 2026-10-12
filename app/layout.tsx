@@ -2,9 +2,13 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'শৈশব · তোমার ছোটবেলার গল্পটা কেমন ছিল? | Bangladesh Childhood Generator',
+  title: 'শৈশব · আপনার ছোটবেলার গল্পটা কেমন ছিল? | Bangladesh Childhood Generator',
   description:
     'বাংলাদেশের শৈশব, স্মৃতি আর নস্টালজিয়ার একটি অনন্য ইন্টার্যাক্টিভ অভিজ্ঞতা। ১০-১২টি সহজ প্রশ্নের উত্তর দিয়ে নিজের শৈশব পরিচয়পত্র তৈরি করুন ও বন্ধুদের সাথে শেয়ার করুন।',
+  icons: {
+    icon: '/logo-shoishob.png',
+    apple: '/logo-shoishob.png',
+  },
   keywords: [
     'শৈশব',
     'Shoishob',
@@ -20,7 +24,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'শৈশব (Shoishob) টিম' }],
   openGraph: {
-    title: 'শৈশব · তোমার ছোটবেলার গল্পটা কেমন ছিল?',
+    title: 'শৈশব · আপনার ছোটবেলার গল্পটা কেমন ছিল?',
     description:
       'বাংলাদেশের শৈশব ও স্মৃতির ব্যক্তিগত পরিচয়পত্র তৈরি করুন ও বন্ধুদের সাথে নস্টালজিয়া ভাগ করে নিন।',
     siteName: 'শৈশব (Shoishob)',
@@ -30,7 +34,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'শৈশব · Bangladesh Childhood Generator',
-    description: 'তোমার শৈশব কোন যুগের ছিল? জেনে নাও শৈশব-এ!',
+    description: 'আপনার শৈশব কোন যুগের ছিল? জেনে নিন শৈশব-এ!',
   },
 };
 

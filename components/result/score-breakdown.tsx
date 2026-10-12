@@ -14,7 +14,7 @@ export function ScoreBreakdown({ result }: ScoreBreakdownProps) {
         <div className="flex items-center gap-2 mb-3">
           <Sparkles className="w-5 h-5 text-[#2E6F40]" />
           <h3 className="text-xl font-bold text-[#253D2C]">
-            তোমার শৈশবের বিস্তারিত গল্প
+            আপনার শৈশবের বিস্তারিত গল্প
           </h3>
         </div>
         <p className="text-sm sm:text-base text-[#253D2C]/85 leading-relaxed mb-5">
@@ -24,7 +24,7 @@ export function ScoreBreakdown({ result }: ScoreBreakdownProps) {
         {/* Signature Traits */}
         <div className="border-t border-[#2E6F40]/10 pt-4">
           <span className="text-xs font-bold text-[#2E6F40] uppercase tracking-wider block mb-3">
-            তোমার সবচেয়ে চেনা বৈশিষ্ট্যসমূহ:
+            আপনার সবচেয়ে চেনা বৈশিষ্ট্যসমূহ:
           </span>
           <div className="space-y-2">
             {result.archetype.signatureTraitsBn.map((trait, idx) => (

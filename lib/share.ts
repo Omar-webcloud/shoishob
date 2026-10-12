@@ -81,7 +81,7 @@ export function getShareUrl(result: ChildhoodResult): string {
 
 export function getWhatsAppShareLink(result: ChildhoodResult): string {
   const url = getShareUrl(result);
-  const text = `আমার শৈশবের পরিচয়পত্র তৈরি করেছি শৈশব-এ! আমি "${result.archetype.titleBn}" (${result.nostalgiaScore}% খাঁটি নস্টালজিয়া) 🇧🇩✨\n\nতোমার ছোটবেলার গল্পটা কেমন ছিল? দেখে নাও এখানে:`;
+  const text = `আমার শৈশবের পরিচয়পত্র তৈরি করেছি শৈশব-এ! আমি "${result.archetype.titleBn}" (${result.nostalgiaScore}% খাঁটি নস্টালজিয়া) 🇧🇩✨\n\nআপনার ছোটবেলার গল্পটা কেমন ছিল? দেখে নিন এখানে:`;
   return `https://api.whatsapp.com/send?text=${encodeURIComponent(`${text}\n${url}`)}`;
 }
 

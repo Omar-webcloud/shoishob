@@ -35,7 +35,7 @@ export function StoryGuideDialog({
             Instagram Story-তে শেয়ার গাইড
           </h3>
           <p className="text-xs sm:text-sm text-[#253D2C]/75 mt-1">
-            ইনস্টাগ্রাম স্টোরিতে তোমার শৈশব কার্ড পোস্ট করার ৩টি সহজ ধাপ:
+            ইনস্টাগ্রাম স্টোরিতে আপনার শৈশব কার্ড পোস্ট করার ৩টি সহজ ধাপ:
           </p>
         </div>
 
@@ -48,7 +48,7 @@ export function StoryGuideDialog({
             <div>
               <span className="font-bold block text-[#253D2C]">ছবি সেভ বা ডাউনলোড করুন</span>
               <span className="text-[#253D2C]/75 text-xs">
-                প্রথমে নিচের বাটন দিয়ে কার্ডটির হাই-রেজ্যুলুশন ছবি তোমার ফোনে সেভ করে নাও।
+                প্রথমে নিচের বাটন দিয়ে কার্ডটির হাই-রেজ্যুলুশন ছবি আপনার ফোনে সেভ করে নিন।
               </span>
             </div>
           </div>
@@ -60,7 +60,7 @@ export function StoryGuideDialog({
             <div>
               <span className="font-bold block text-[#253D2C]">Instagram অ্যাপ ওপেন করুন</span>
               <span className="text-[#253D2C]/75 text-xs">
-                ইনস্টাগ্রাম খুলে <strong>&ldquo;Your Story&rdquo;</strong>-এ যাও এবং সেভ করা ছবিটি সিলেক্ট করো।
+                ইনস্টাগ্রাম খুলে <strong>&ldquo;Your Story&rdquo;</strong>-এ যান এবং সেভ করা ছবিটি সিলেক্ট করুন।
               </span>
             </div>
           </div>
@@ -72,7 +72,7 @@ export function StoryGuideDialog({
             <div>
               <span className="font-bold block text-[#253D2C]">লিংক স্টিকার ও বন্ধুদের ট্যাগ</span>
               <span className="text-[#253D2C]/75 text-xs">
-                স্টিকারে <strong>shoishob.vercel.app</strong> লিংক যুক্ত করে বন্ধুদের চ্যালেঞ্জ করো!
+                স্টিকারে <strong>shoishob.vercel.app</strong> লিংক যুক্ত করে বন্ধুদের চ্যালেঞ্জ করুন!
               </span>
             </div>
           </div>
