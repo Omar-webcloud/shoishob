@@ -201,7 +201,7 @@ export function ResultShell({ initialResult }: ResultShellProps) {
       const url = URL.createObjectURL(blob);
 
       // Tier 1: Try direct anchor download (works in Chrome / Safari / Firefox)
-      const success = triggerDirectDownload(blob, filename);
+      const success = await triggerDirectDownload(blob, filename);
 
       if (success) {
         showStatus('success', `${format.toUpperCase()} ফাইল সরাসরি আপনার সিস্টেমে ডাউনলোড হয়েছে!`);
