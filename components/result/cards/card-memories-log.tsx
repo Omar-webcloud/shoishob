@@ -78,7 +78,7 @@ export function CardMemoriesLog({
 
   return (
     <div
-      className="bg-[#FFF8E7] text-[#183B2B] flex flex-col justify-between border-[12px] border-[#174A32] w-[1080px] h-[1350px] p-9"
+      className="bg-[#FFF8E7] text-[#183B2B] flex flex-col justify-between border-[12px] border-[#174A32] rounded-[56px] overflow-hidden w-[1080px] h-[1350px] p-9"
       style={{
         fontFamily: "'Hind Siliguri', 'Noto Sans Bengali', 'Anek Bangla', system-ui, sans-serif",
         backgroundImage: 'radial-gradient(rgba(202, 137, 37, 0.13) 2px, transparent 0)',
@@ -87,7 +87,7 @@ export function CardMemoriesLog({
       }}
     >
       {/* Top Header */}
-      <div className="flex items-center gap-4 rounded-2xl bg-[#174A32] px-6 py-5 shadow-lg">
+      <div className="flex items-center gap-4 rounded-[32px] bg-[#174A32] px-6 py-5 shadow-lg">
         <div className="flex items-center gap-4">
           <div className="w-18 h-18 rounded-full overflow-hidden border-3 border-[#F6C453] shadow-md shrink-0 bg-[#102F22]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -111,7 +111,7 @@ export function CardMemoriesLog({
           {displayedItems.map((item, idx) => (
             <div
               key={idx}
-              className="rounded-2xl flex flex-col justify-center shadow-md p-5 min-h-64 border-2 border-white/80"
+              className="rounded-[24px] flex flex-col justify-center shadow-md p-5 min-h-64 border-2 border-white/80"
               style={{ backgroundColor: tileColors[idx % tileColors.length] }}
             >
               <div>
@@ -126,7 +126,7 @@ export function CardMemoriesLog({
       </div>
 
       {/* Footer Score Bar */}
-      <div className="rounded-2xl bg-[#174A32] text-white p-6 flex items-center justify-between shadow-xl border-2 border-[#F6C453]">
+      <div className="rounded-[32px] bg-[#174A32] text-white p-6 flex items-center justify-between shadow-xl border-2 border-[#F6C453]">
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 rounded-2xl bg-[#F6C453] flex items-center justify-center font-bold shrink-0">
               <Award className="w-9 h-9 text-[#174A32]" />

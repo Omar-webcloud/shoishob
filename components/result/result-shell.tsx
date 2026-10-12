@@ -382,7 +382,7 @@ export function ResultShell({ initialResult }: ResultShellProps) {
       </div>
 
       {/* Main Identity Card Preview (WYSIWYG ScaledCard) */}
-      <div className="w-full max-w-xl mx-auto shadow-2xl rounded-3xl overflow-hidden border-2 border-[#2E6F40]/25 bg-white">
+      <div className="w-full max-w-xl mx-auto shadow-2xl rounded-[24px] overflow-hidden border-2 border-[#2E6F40]/25 bg-white">
         <ScaledCard
           ref={exportCardRef}
           result={result}

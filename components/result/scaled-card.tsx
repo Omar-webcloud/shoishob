@@ -59,7 +59,7 @@ export const ScaledCard = forwardRef<HTMLDivElement, ScaledCardProps>(function S
         width: '100%',
         height: Math.round(CARD_H * scale),
         overflow: 'hidden',
-        borderRadius: '1.5rem',
+        borderRadius: `${Math.min(24, 56 * scale)}px`,
       }}
     >
       <div

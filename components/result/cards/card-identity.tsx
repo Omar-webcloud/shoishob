@@ -11,7 +11,7 @@ export function CardIdentity({
 }: CardIdentityProps) {
   return (
     <div
-      className="bg-[#FFF8E7] text-[#183B2B] flex flex-col justify-between border-[12px] border-[#174A32] w-[1080px] h-[1350px] p-9"
+      className="bg-[#FFF8E7] text-[#183B2B] flex flex-col justify-between border-[12px] border-[#174A32] rounded-[56px] overflow-hidden w-[1080px] h-[1350px] p-9"
       style={{
         fontFamily: "'Hind Siliguri', 'Noto Sans Bengali', 'Anek Bangla', system-ui, sans-serif",
         backgroundImage: 'radial-gradient(rgba(202, 137, 37, 0.14) 2px, transparent 0)',
@@ -20,7 +20,7 @@ export function CardIdentity({
       }}
     >
       {/* Top Header */}
-      <div className="flex flex-wrap items-center justify-between gap-y-3 rounded-2xl bg-[#174A32] px-6 py-5 shadow-lg">
+      <div className="flex flex-wrap items-center justify-between gap-y-3 rounded-[32px] bg-[#174A32] px-6 py-5 shadow-lg">
         <div className="flex items-center gap-4">
           <div className="w-18 h-18 rounded-full overflow-hidden border-3 border-[#F6C453] shadow-md shrink-0 bg-[#102F22]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -59,7 +59,7 @@ export function CardIdentity({
         </div>
 
         {/* Signature Memory Quote Box */}
-        <div className="max-w-4xl w-full bg-[#DDF4E4] rounded-2xl p-5 border-2 border-[#2E6F40]/30 mb-4 shadow-md">
+        <div className="max-w-4xl w-full bg-[#DDF4E4] rounded-[28px] p-5 border-2 border-[#2E6F40]/30 mb-4 shadow-md">
           <p className="text-4xl text-[#183B2B] italic font-semibold leading-snug m-0">
             “{result.signatureMemoryBn}”
           </p>
@@ -71,7 +71,7 @@ export function CardIdentity({
             {result.badges.slice(0, 3).map((badge, idx) => (
               <div
                 key={badge.id}
-                className="flex items-center gap-5 p-4 rounded-xl border-2 border-white/80 text-left shadow-sm"
+                className="flex items-center gap-5 p-4 rounded-[24px] border-2 border-white/80 text-left shadow-sm"
                 style={{ backgroundColor: ['#F6C453', '#9FE3C0', '#A9D5F3'][idx] }}
               >
                 <span className="text-4xl shrink-0">{badge.icon}</span>
@@ -85,7 +85,7 @@ export function CardIdentity({
       </div>
 
       {/* Footer Score Bar */}
-      <div className="rounded-2xl bg-[#174A32] text-white p-6 flex items-center justify-between shadow-xl border-2 border-[#F6C453]">
+      <div className="rounded-[32px] bg-[#174A32] text-white p-6 flex items-center justify-between shadow-xl border-2 border-[#F6C453]">
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 rounded-2xl bg-[#F6C453] flex items-center justify-center font-bold shrink-0">
               <Award className="w-9 h-9 text-[#174A32]" />
